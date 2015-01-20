@@ -1,0 +1,22 @@
+{
+  "name": "react-search",
+  "version": "0.0.1",
+  "description": "a simple search box component",
+  "main": "search.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StevenIseki/search-todo.git"
+  },
+  "author": "Steven Iseki",
+  "license": "MIT",
+  "homepage": "https://github.com/StevenIseki/search-todo.git",
+  "peerDependencies": {
+    "react": "*"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-react": "*",
+    "mocha": "*"
+  },
+  "keywords": ["react-component", "react", "todo"]
+}
