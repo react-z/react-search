@@ -1,6 +1,6 @@
 {
   "name": "react-search",
-  "version": "0.0.1",
+  "version": "0.9.3",
   "description": "a simple search box component",
   "main": "search.js",
   "repository": {
@@ -15,8 +15,14 @@
   },
   "devDependencies": {
     "gulp": "*",
+    "connect": "*",
+    "connect-livereload": "*",
+    "gulp-livereload": "*",
+    "serve-static": "*",
+    "serve-index": "*",
+    "opn": "*",
     "gulp-react": "*",
     "mocha": "*"
   },
-  "keywords": ["react-component", "react", "todo"]
+  "keywords": ["react-component", "react", "search"]
 }
