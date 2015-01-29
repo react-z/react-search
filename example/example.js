@@ -1,5 +1,6 @@
 var React = require('react');
 var Search = require('../jsx/search.jsx');
+var Timer =
 
 var OPTIONS = { prefix: 'seconds elapsed!', delay: 100}
 
