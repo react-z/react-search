@@ -1,1 +1,24 @@
-/* search.css */
+.react-search {
+    margin: 0;
+    padding: 2em;
+}
+
+.react-search .button-secondary {
+  background: #fff;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.react-search .pure-button {
+  font-size: 120%;
+  margin: 0.25em;
+  font-weight: 250;
+}
+
+.react-search .input-text {
+  font-size: 150%;
+  font-weight: 250;
+  line-height: 1.5;
+  color: #666;
+}
+

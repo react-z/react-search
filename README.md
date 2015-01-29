@@ -1,6 +1,8 @@
 # react-search
 
-React search is a simple search component written in react.
+react-search is a simple search box component using react.js.
+
+![](example/screenshot.png)
 
 ## Installation
 
@@ -12,15 +14,27 @@ React search is a simple search component written in react.
 var React = require('react');
 var Search = require('react-search');
 
-React.renderComponent(
-    <Search className="search" data={[
-        { Name: 'Griffin Smith', Age: 18 },
-        { Age: 23,  Name: 'Lee Salminen' },
-        { Age: 28, Position: 'Developer' },
-    ]} />,
-    document.getElementById('table')
-);
+var OPTIONS = { prefix: 'seconds elapsed!', delay: 100}
+
+React.renderComponent(<Search options={OPTIONS} />, document.getElementById("container"));
+
 ```
+
+## Styles
+
+All React UI components are made to be compatible with [pure CSS](http://purecss.io/) which gives some nice responsive styles. 
+
+The components can also be used with your own custom style sheets. A minimal search.css style sheet is included as a guide.
+
+## Development
+
+Initial set up, run:
+    
+    npm install
+
+For watch on files, live reload, JSX transpiling and browserify, run:
+
+    gulp
 
 ## License
 

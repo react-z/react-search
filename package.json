@@ -1,8 +1,8 @@
 {
   "name": "react-search",
-  "version": "0.9.3",
+  "version": "0.0.1",
   "description": "a simple search box component",
-  "main": "search.js",
+  "main": "jsx/timer.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/StevenIseki/react-search.git"
@@ -22,7 +22,19 @@
     "serve-index": "*",
     "opn": "*",
     "gulp-react": "*",
+    "react": "*",
+    "browserify": "*",
+    "watchify": "*",
+    "reactify": "*",
+    "vinyl-source-stream": "*",
     "mocha": "*"
   },
-  "keywords": ["react-component", "react", "search"]
+  "keywords": [
+    "react-component",
+    "react",
+    "search",
+    "browserify",
+    "pure css",
+    "search-box"
+  ]
 }
