@@ -11,22 +11,39 @@ var SecondsTohhmmss = require('./SecondsTohhmmss.jsx');
 var Search = React.createClass({
   getInitialState: function(){
      return {
-       searchValue: ''
+       searchValue: '',
+       items:  ['Steven', 'Sean', 'Stefan', 'Sam', 'Nathan']
      }
   },
   componentDidMount: function() {
   },
   componentWillUnmount: function() {
   },  
-  search: function () {
-
+  changeInput: function (val) {
+    // need val to come through, maybe ref?
+    if(val == undefined){
+      return;
+    }
+    var result = this.autoComplete(val);
+    document.getElementById("result").innerHTML = result;
+  },
+  autoComplete: function (input) {
+    //
+    var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
+    
+    return this.state.items.filter(function(item) {
+      if (item.match(reg)) {
+        return item;
+      }
+    });
   },
   render: function(){
     return (
-
       <div className="react-search">
-       <input className="input-text" type="text" placeholder="searchValue" />
-       <button onClick={this.search} className="pure-button button-secondary">search</button>
+       <input type="text" className="input-text" onKeyUp={this.changeInput}  />
+
+        <div id="result">
+        </div>
       </div>
     );
   }
