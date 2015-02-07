@@ -1,11 +1,11 @@
 var React = require('react');
 var Search = require('../jsx/search.jsx');
-var OPTIONS = { prefix: 'seconds elapsed!', delay: 100}
+var ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
 
 React.render(
 	React.createElement(
 		Search, 
-		{options: OPTIONS}
+		{items: ITEMS}
 	),
 	document.getElementById("container")
 );

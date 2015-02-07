@@ -1,6 +1,6 @@
 # react-search
 
-react-search is a simple search box component using react.js.
+react-search is a simple search box autocomplete component using react.js.
 
 ![](example/screenshot.png)
 
@@ -14,9 +14,9 @@ react-search is a simple search box component using react.js.
 var React = require('react');
 var Search = require('react-search');
 
-var OPTIONS = { prefix: 'seconds elapsed!', delay: 100}
+var ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
 
-React.renderComponent(<Search options={OPTIONS} />, document.getElementById("container"));
+React.renderComponent(<Search items={ITEMS} />, document.getElementById("container"));
 
 ```
 

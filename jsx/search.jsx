@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var SecondsTohhmmss = require('./SecondsTohhmmss.jsx');
+var SearchItemInArray = require('../js/SearchItemInArray.js');
 
 /**
  * Search module
@@ -11,39 +11,53 @@ var SecondsTohhmmss = require('./SecondsTohhmmss.jsx');
 var Search = React.createClass({
   getInitialState: function(){
      return {
-       searchValue: '',
-       items:  ['Steven', 'Sean', 'Stefan', 'Sam', 'Nathan']
+       items:  this.props.items,
+       matchingItems: [],
+       searchValue: ''
      }
   },
   componentDidMount: function() {
   },
   componentWillUnmount: function() {
   },  
-  changeInput: function (val) {
-    // need val to come through, maybe ref?
-    if(val == undefined){
-      return;
-    }
-    var result = this.autoComplete(val);
-    document.getElementById("result").innerHTML = result;
+  /** 
+   * Input box text has changed, trigger update of the autocomplete box.
+  **/
+  changeInput: function () {
+    var autocomplete = this.refs.autocomplete.getDOMNode();
+    autocomplete.className = "pure-menu pure-menu-open";
+    var searchValue = this.refs.searchInput.getDOMNode().value;
+    var result = SearchItemInArray(this.state.items, searchValue);
+    this.setState({matchingItems: result});
   },
-  autoComplete: function (input) {
-    //
-    var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
-    
-    return this.state.items.filter(function(item) {
-      if (item.match(reg)) {
-        return item;
-      }
-    });
+  selectAutoComplete: function (e) {
+    var autocomplete = this.refs.autocomplete.getDOMNode();
+    autocomplete.className = "pure-menu pure-menu-hidden";
+    var result = e.target.innerHTML;
+    this.refs.searchInput.getDOMNode().value = result;
   },
   render: function(){
+
+    var items = this.state.matchingItems.map(function (item) {
+      return (
+        <li>
+          <a onClick={this.selectAutoComplete}>
+            {item}
+          </a>
+        </li>
+      );
+    }.bind(this));
+
     return (
       <div className="react-search">
-       <input type="text" className="input-text" onKeyUp={this.changeInput}  />
+       <input type="text" className="input-text" ref="searchInput" onKeyUp={this.changeInput} />
 
-        <div id="result">
+        <div className="pure-menu pure-menu-hidden" ref="autocomplete">
+          <ul>
+          {items}
+          </ul>
         </div>
+
       </div>
     );
   }

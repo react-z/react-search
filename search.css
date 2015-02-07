@@ -1,24 +1,39 @@
 .react-search {
-    margin: 0;
-    padding: 2em;
-}
-
-.react-search .button-secondary {
-  background: #fff;
-  color: #666;
-  border: 1px solid #ddd;
-}
-
-.react-search .pure-button {
-  font-size: 120%;
-  margin: 0.25em;
-  font-weight: 250;
+  margin: 0;
+  padding: 1em;
+  font-size: 150%;
+  font-weight: 200;
+  line-height: 1.5;
 }
 
 .react-search .input-text {
-  font-size: 150%;
-  font-weight: 250;
-  line-height: 1.5;
   color: #666;
+  width: 100%;
+  padding: 0.4em;
 }
 
+
+/* TODO */
+/* minimal styles compared to pure.css styles, test with both and just this css */
+
+.pure-menu a, .pure-menu .pure-menu-heading {
+  display: block;
+  line-height: 1.5em;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 1em;
+}
+
+.pure-menu.pure-menu-open {
+  visibility: visible;
+  z-index: 2;
+}
+
+.pure-menu.pure-menu-open {
+  background: #fff;
+  border: 1px solid #b7b7b7;
+}
+
+.pure-menu.pure-menu-hidden {
+  visibility: hidden;
+}

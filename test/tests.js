@@ -1,8 +1,8 @@
 var test = require('tape');
-var SecondsTohhmmss = require('../js/SecondsTohhmmss.js');
+var SearchItemInArray = require('../js/SearchItemInArray.js');
+var items = ['Steven', 'Sean', 'Stefan', 'Sam', 'Nathan'];
 
-test('basic arithmetic', function (t) {
-    t.equal(SecondsTohhmmss(2), "00:00:00.02");
-    t.equal(SecondsTohhmmss(70), "00:00:01.10");
+test('search items in array returns correctly', function (t) {
+    t.equal(SearchItemInArray(items, "ste")[0], 'Steven');
     t.end();
 });
