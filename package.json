@@ -1,6 +1,6 @@
 {
   "name": "react-search",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a simple search box component",
   "main": "js/search.js",
   "repository": {
@@ -28,7 +28,7 @@
     "reactify": "*",
     "vinyl-source-stream": "*",
     "tape": "*"
-  },  
+  },
   "testling": {
     "files": "test/*.js",
     "browsers": [
@@ -39,10 +39,10 @@
       "android-browser/latest"
     ]
   },
-    "scripts": {
+  "scripts": {
     "test": "tape test/*.js"
   },
-    "keywords": [
+  "keywords": [
     "react",
     "react-component",
     "autocomplete",
