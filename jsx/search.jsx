@@ -25,14 +25,14 @@ var Search = React.createClass({
   **/
   changeInput: function () {
     var autocomplete = this.refs.autocomplete.getDOMNode();
-    autocomplete.className = "pure-menu pure-menu-open";
+    autocomplete.className = "menu menu-open";
     var searchValue = this.refs.searchInput.getDOMNode().value;
     var result = SearchItemInArray(this.state.items, searchValue);
     this.setState({matchingItems: result});
   },
   selectAutoComplete: function (e) {
     var autocomplete = this.refs.autocomplete.getDOMNode();
-    autocomplete.className = "pure-menu pure-menu-hidden";
+    autocomplete.className = "menu menu-hidden";
     var result = e.target.innerHTML;
     this.refs.searchInput.getDOMNode().value = result;
   },
@@ -52,7 +52,7 @@ var Search = React.createClass({
       <div className="react-search">
        <input type="text" className="input-text" ref="searchInput" onKeyUp={this.changeInput} />
 
-        <div className="pure-menu pure-menu-hidden" ref="autocomplete">
+        <div className="menu menu-hidden" ref="autocomplete">
           <ul>
           {items}
           </ul>

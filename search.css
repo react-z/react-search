@@ -16,7 +16,7 @@
 /* TODO */
 /* minimal styles compared to pure.css styles, test with both and just this css */
 
-.pure-menu a, .pure-menu .pure-menu-heading {
+.menu {
   display: block;
   line-height: 1.5em;
   text-decoration: none;
@@ -24,16 +24,23 @@
   padding: 1em;
 }
 
-.pure-menu.pure-menu-open {
-  visibility: visible;
-  z-index: 2;
+.menu ul {
+  list-style-type: none;
+  padding: 0em;
+  margin: 0em;
 }
 
-.pure-menu.pure-menu-open {
+.menu a:hover, .menu a:visited { 
+  font-weight: bold;
+} 
+
+.menu-open {
+  visibility: visible;
+  z-index: 2;
   background: #fff;
   border: 1px solid #b7b7b7;
 }
 
-.pure-menu.pure-menu-hidden {
+.menu-hidden {
   visibility: hidden;
 }

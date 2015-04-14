@@ -22,9 +22,7 @@ React.renderComponent(<Search items={ITEMS} />, document.getElementById("contain
 
 ## Styles
 
-All React UI components are made to be compatible with [pure CSS](http://purecss.io/) which gives some nice responsive styles. 
-
-The components can also be used with your own custom style sheets. A minimal search.css style sheet is included as a guide.
+react-search can be used with your own custom styles. A minimal search.css style sheet is included as a guide.
 
 ## Development
 
