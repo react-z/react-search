@@ -20,6 +20,38 @@ React.renderComponent(<Search items={ITEMS} />, document.getElementById("contain
 
 ```
 
+## Callbacks onClick and onChange
+
+You can specify callback functions for onClick of the element and onChange of the search input. The element passed in is the SyntheticKeyboardEvent, which you can use to get the target or value.
+
+```javascript
+var React = require('react');
+var Search = require('react-search');
+
+var MyForm = React.createClass({ displayName: "MyForm",
+
+	/* the custom callback triggered by react-search */
+    myFunc:function(e) {
+      console.log(e.target.value);
+    },
+
+    render:function() {
+
+        var ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
+
+        return (
+          <form>
+            <Search items={ITEMS} onChange={this.myFunc} onClick={this.myFunc} />
+          </form> 
+        );
+    }
+
+});
+
+React.renderComponent(<MyForm />, document.getElementById("container"));
+
+```
+
 ## Styles
 
 react-search can be used with your own custom styles. A minimal search.css style sheet is included as a guide.
