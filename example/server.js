@@ -4,11 +4,9 @@ var path = require('path');
 port = process.env.PORT || 5000;
 
 express()
-  .get('/app.js', function(req, res) {
-    res.sendfile(path.join(__dirname, 'build', 'app.js'));
-  })
+  .use('/public', express.static(__dirname + '/public'))
   .get('/', function(req, res) {
-    res.sendfile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '/index.html'));
   })
   .listen(port, function() {
     console.log("Listening on " + port + ".");

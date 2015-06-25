@@ -2,18 +2,11 @@ var path = require('path');
 
 module.exports = {
   context: __dirname,
-  entry: {
-    app: './app.js'
-  },
-
+  entry: { app: './example.js' },
   output: {
-    filename: '[name].js',
-    path: path.join(__dirname, 'build'),
-    devtool: '$@inline-source-map',
-    libraryTarget: 'umd',
-    publicPath: '../build/'
+    filename: './example/public/bundle.js',
+    publicPath: 'public'
   },
-
   module: {
     loaders: [
       {

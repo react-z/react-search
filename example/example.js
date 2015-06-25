@@ -1,30 +1,20 @@
-var React = require('react');
-var Search = require('../jsx/search.jsx');
+import React from 'react'
+import Search from '../lib/search'
 
-var SearchBar = React.createClass({displayName: "SearchBar",
+let TestComponent = React.createClass({
 
-    myFunc:function(e) {
-      console.log(e.target.value);
-    },
+  myFunc:function(e) {
+    console.log(e.target.value);
+  },
 
-    render:function() {
-
-        var ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
-
-        return (
-          React.createElement("form", null, 
-          React.createElement(Search, {items: ITEMS, onChange: this.myFunc, onClick: this.myFunc })
-          )
-        );
-    }
-
+  render: function() {
+    return (
+    	<div>
+    		<Search items={this.props.items} onChange={this.myFunc} />
+    	</div>
+   	);
+  }
 });
 
-
-React.render(
-	React.createElement(
-		SearchBar
-	),
-	document.getElementById("container")
-);
-
+let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
+React.render(<TestComponent items={ITEMS} />, document.getElementById('container'))
