@@ -1,14 +1,11 @@
-/** @jsx React.DOM */
-
-var React = require('react');
-var SearchItemInArray = require('../js/SearchItemInArray.js');
+var SearchItemInArray = require('./SearchItemInArray');
 
 /**
  * Search module
  * A simple search box component.
 **/
 
-var Search = React.createClass({displayName: "Search",
+var Search = React.createClass({
   getInitialState: function(){
      return {
        items:  this.props.items,
@@ -57,29 +54,29 @@ var Search = React.createClass({displayName: "Search",
 
     var items = this.state.matchingItems.map(function (item) {
       return (
-        React.createElement("li", null, 
-          React.createElement("a", {onClick: this.selectAutoComplete}, 
-            item
-          )
-        )
+        <li>
+          <a onClick={this.selectAutoComplete}>
+            {item}
+          </a>
+        </li>
       );
     }.bind(this));
 
     return (
-      React.createElement("div", {className: "react-search"}, 
+      <div className="react-search">
 
-       React.createElement("input", {type: "text", 
-              className: "input-text", 
-              ref: "searchInput", 
-              onKeyUp: this.changeInput}), 
+       <input type="text" 
+              className="input-text" 
+              ref="searchInput" 
+              onKeyUp={this.changeInput} />
 
-        React.createElement("div", {className: "menu menu-hidden", ref: "autocomplete"}, 
-          React.createElement("ul", null, 
-          items
-          )
-        )
+        <div className="menu menu-hidden" ref="autocomplete">
+          <ul>
+          {items}
+          </ul>
+        </div>
 
-      )
+      </div>
     );
   }
 });
