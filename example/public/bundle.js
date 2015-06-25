@@ -64,11 +64,7 @@
 	  },
 
 	  render: function render() {
-	    return _react2['default'].createElement(
-	      'div',
-	      null,
-	      _react2['default'].createElement(_libSearch2['default'], { items: this.props.items, onChange: this.myFunc })
-	    );
+	    return _react2['default'].createElement(_libSearch2['default'], { items: this.props.items, onChange: this.myFunc });
 	  }
 	});
 
@@ -20477,11 +20473,7 @@
 	  displayName: 'Search',
 
 	  getInitialState: function getInitialState() {
-	    return {
-	      items: this.props.items,
-	      matchingItems: [],
-	      searchValue: ''
-	    };
+	    return { matchingItems: [] };
 	  },
 
 	  propTypes: {
@@ -20502,7 +20494,7 @@
 	    var autocomplete = this.refs.autocomplete.getDOMNode();
 	    autocomplete.className = 'menu menu-open';
 	    var searchValue = this.refs.searchInput.getDOMNode().value;
-	    var result = (0, _SearchItemInArray2['default'])(this.state.items, searchValue);
+	    var result = (0, _SearchItemInArray2['default'])(this.props.items, searchValue);
 	    this.setState({ matchingItems: result });
 	  },
 	  /** 
@@ -20521,9 +20513,10 @@
 	    this.refs.searchInput.getDOMNode().value = result;
 	  },
 	  render: function render() {
+	    var _this = this;
 
-	    var items = this.state.matchingItems.map((function (item) {
-	      return _react2['default'].createElement('li', null, _react2['default'].createElement('a', { onClick: this.selectAutoComplete }, item));
+	    var items = this.state.matchingItems.map((function (item, i) {
+	      return _react2['default'].createElement('li', { key: i }, _react2['default'].createElement('a', { onClick: _this.selectAutoComplete }, item));
 	    }).bind(this));
 
 	    return _react2['default'].createElement('div', { className: 'react-search' }, _react2['default'].createElement('input', { type: 'text',

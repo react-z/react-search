@@ -2,7 +2,7 @@
   "name": "react-search",
   "version": "0.0.11",
   "description": "a simple search box component",
-  "main": "lib/es5/search.js",
+  "main": "lib/search.js",
   "author": "Steven Iseki <stevenisekimartin@gmail.com>",
   "license": "MIT",
   "peerDependencies": {

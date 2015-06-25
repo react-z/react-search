@@ -8,16 +8,13 @@ import SearchItemInArray from './SearchItemInArray'
 
 var Search = React.createClass({
   getInitialState: function(){
-     return {
-       items:  this.props.items,
-       matchingItems: [],
-       searchValue: ''
-     }
+     return { matchingItems: [] }
   },
 
   propTypes: {
+    items: React.PropTypes.array,
     onChange: React.PropTypes.func,
-    onClick: React.PropTypes.func    
+    onClick: React.PropTypes.func
   },
 
   /** 
@@ -30,10 +27,10 @@ var Search = React.createClass({
       this.props.onChange(e);
     };
 
-    var autocomplete = this.refs.autocomplete.getDOMNode();
+    let autocomplete = this.refs.autocomplete.getDOMNode();
     autocomplete.className = "menu menu-open";
-    var searchValue = this.refs.searchInput.getDOMNode().value;
-    var result = SearchItemInArray(this.state.items, searchValue);
+    let searchValue = this.refs.searchInput.getDOMNode().value;
+    let result = SearchItemInArray(this.props.items, searchValue);
     this.setState({matchingItems: result});
   },
   /** 
@@ -46,19 +43,17 @@ var Search = React.createClass({
       this.props.onClick(e);
     };
 
-    var autocomplete = this.refs.autocomplete.getDOMNode();
+    let autocomplete = this.refs.autocomplete.getDOMNode();
     autocomplete.className = "menu menu-hidden";
-    var result = e.target.innerHTML;
+    let result = e.target.innerHTML;
     this.refs.searchInput.getDOMNode().value = result;
   },
   render: function(){
 
-    var items = this.state.matchingItems.map(function (item) {
+    let items = this.state.matchingItems.map( (item, i) => {
       return (
-        <li>
-          <a onClick={this.selectAutoComplete}>
-            {item}
-          </a>
+        <li key={i}>
+          <a onClick={this.selectAutoComplete}>{item}</a>
         </li>
       );
     }.bind(this));
@@ -72,9 +67,7 @@ var Search = React.createClass({
               onKeyUp={this.changeInput} />
 
         <div className="menu menu-hidden" ref="autocomplete">
-          <ul>
-          {items}
-          </ul>
+          <ul>{items}</ul>
         </div>
 
       </div>

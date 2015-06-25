@@ -9,9 +9,7 @@ let TestComponent = React.createClass({
 
   render: function() {
     return (
-    	<div>
-    		<Search items={this.props.items} onChange={this.myFunc} />
-    	</div>
+    	<Search items={this.props.items} onChange={this.myFunc} />
    	);
   }
 });
