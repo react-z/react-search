@@ -1,6 +1,6 @@
 {
   "name": "react-search",
-  "version": "0.0.12",
+  "version": "1.0.0",
   "description": "a simple search box component",
   "main": "lib/search.js",
   "repository": {
