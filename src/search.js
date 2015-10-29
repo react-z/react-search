@@ -28,9 +28,9 @@ var Search = React.createClass({
       this.props.onChange(e);
     };
 
-    let autocomplete = this.refs.autocomplete.getDOMNode();
+    let autocomplete = this.refs.autocomplete;
     autocomplete.className = "menu menu-open";
-    let searchValue = this.refs.searchInput.getDOMNode().value;
+    let searchValue = this.refs.searchInput.value;
     let result = SearchItemInArray(this.props.items, searchValue);
     this.setState({matchingItems: result});
   },
@@ -44,10 +44,10 @@ var Search = React.createClass({
       this.props.onClick(e);
     };
 
-    let autocomplete = this.refs.autocomplete.getDOMNode();
+    let autocomplete = this.refs.autocomplete;
     autocomplete.className = "menu menu-hidden";
     let result = e.target.innerHTML;
-    this.refs.searchInput.getDOMNode().value = result;
+    this.refs.searchInput.value = result;
   },
   render: function(){
 
