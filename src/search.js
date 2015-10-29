@@ -11,6 +11,10 @@ var Search = React.createClass({
      return { matchingItems: [] }
   },
 
+  getDefaultProps: function() {
+    return { className: "react-search" };
+  },
+
   propTypes: {
     items: React.PropTypes.array,
     placeHolder: React.PropTypes.string,
@@ -29,7 +33,7 @@ var Search = React.createClass({
     };
 
     let autocomplete = this.refs.autocomplete;
-    autocomplete.className = "menu menu-open";
+    autocomplete.className = `${this.props.className}__menu ${this.props.className}__menu--open`;
     let searchValue = this.refs.searchInput.value;
     let result = SearchItemInArray(this.props.items, searchValue);
     this.setState({matchingItems: result});
@@ -45,31 +49,33 @@ var Search = React.createClass({
     };
 
     let autocomplete = this.refs.autocomplete;
-    autocomplete.className = "menu menu-hidden";
+    autocomplete.className = `${this.props.className}__menu ${this.props.className}__menu--hidden`;
     let result = e.target.innerHTML;
     this.refs.searchInput.value = result;
   },
   render: function(){
+    const inputClassName = `${this.props.className}__input`;
+    const menuClassName = `${this.props.className}__menu ${this.props.className}__menu--hidden`;
 
     let items = this.state.matchingItems.map( (item, i) => {
       return (
-        <li key={i}>
+        <li key={i} className={`${this.props.className}__menu-item`}>
           <a onClick={this.selectAutoComplete}>{item}</a>
         </li>
       );
     }.bind(this));
 
     return (
-      <div className="react-search">
+      <div className={this.props.className}>
 
-       <input type="text" 
-              className="input-text" 
+       <input type="text"
+              className={inputClassName}
               placeholder={this.props.placeHolder}
-              ref="searchInput" 
+              ref="searchInput"
               onKeyUp={this.changeInput} />
 
-        <div className="menu menu-hidden" ref="autocomplete">
-          <ul>{items}</ul>
+        <div className={menuClassName} ref="autocomplete">
+          <ul className={`${this.props.className}__menu-items`}>{items}</ul>
         </div>
 
       </div>
