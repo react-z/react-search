@@ -22,11 +22,10 @@ var Search = React.createClass({
     onClick: React.PropTypes.func
   },
 
-  /** 
+  /**
    * Input box text has changed, trigger update of the autocomplete box.
   **/
   changeInput: function (e) {
-    
     /* On change input, trigger callback function. */
     if(typeof this.props.onChange !== 'undefined'){
       this.props.onChange(e);
@@ -38,7 +37,7 @@ var Search = React.createClass({
     let result = SearchItemInArray(this.props.items, searchValue);
     this.setState({matchingItems: result});
   },
-  /** 
+  /**
    * On selection of item, set the selected item.
   **/
   selectAutoComplete: function (e) {
@@ -57,13 +56,11 @@ var Search = React.createClass({
     const inputClassName = `${this.props.className}__input`;
     const menuClassName = `${this.props.className}__menu ${this.props.className}__menu--hidden`;
 
-    let items = this.state.matchingItems.map( (item, i) => {
-      return (
-        <li key={i} className={`${this.props.className}__menu-item`}>
-          <a onClick={this.selectAutoComplete}>{item}</a>
-        </li>
-      );
-    }.bind(this));
+    let items = this.state.matchingItems.map((item, i) => (
+      <li key={i} className={`${this.props.className}__menu-item`}>
+        <a onClick={this.selectAutoComplete}>{item}</a>
+      </li>
+    ));
 
     return (
       <div className={this.props.className}>
