@@ -63,6 +63,7 @@ var Search = React.createClass({
 
        <input type="text" 
               className="input-text" 
+              placeholder={this.props.placeHolder}
               ref="searchInput" 
               onKeyUp={this.changeInput} />
 
