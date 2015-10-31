@@ -9,7 +9,7 @@ let TestComponent = React.createClass({
 
   render: function() {
     return (
-    	<Search items={this.props.items} onChange={this.myFunc} />
+      <Search items={this.props.items} placeHolder="Search for a programming language" onChange={this.myFunc} />
    	);
   }
 });

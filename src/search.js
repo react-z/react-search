@@ -13,6 +13,7 @@ var Search = React.createClass({
 
   propTypes: {
     items: React.PropTypes.array,
+    placeHolder: React.PropTypes.string,
     onChange: React.PropTypes.func,
     onClick: React.PropTypes.func
   },
@@ -63,6 +64,7 @@ var Search = React.createClass({
 
        <input type="text" 
               className="input-text" 
+              placeholder={this.props.placeHolder}
               ref="searchInput" 
               onKeyUp={this.changeInput} />
 
