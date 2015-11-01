@@ -1,5 +1,7 @@
 # react-search
 
+[![npm version](https://badge.fury.io/js/react-search.svg)](https://badge.fury.io/js/react-search)
+
 react-search is a simple search box autocomplete component using react.js.
 
 ## Installation
