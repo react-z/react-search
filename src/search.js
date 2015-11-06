@@ -20,7 +20,7 @@ class Search extends Component {
   static get propTypes () {
     return {
       classPrefix: PropTypes.string,
-      items: PropTypes.array.required,
+      items: PropTypes.array.isRequired,
       placeHolder: PropTypes.string,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
