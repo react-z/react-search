@@ -36,6 +36,7 @@
     "check-build": "([ ! -d 'lib' ] && npm run build ) || true",
     "example": "webpack --config ./example/webpack.config.js",
     "prepublish": "npm run build",
+    "postinstall": "npm run check-build",
     "serve": "node ./example/server.js",
     "start": "npm run example && npm run serve",
     "style": "standard",
