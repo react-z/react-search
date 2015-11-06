@@ -1,18 +1,27 @@
-import React from 'react'
 import Search from '../lib/search'
+import ReactDOM from 'react-dom';
+import React, { Component, PropTypes } from 'react';
 
-let TestComponent = React.createClass({
+class TestComponent extends Component {
 
-  myFunc:function(e) {
-    console.log(e.target.value);
-  },
-
-  render: function() {
-    return (
-      <Search items={this.props.items} placeHolder="Search for a programming language" onChange={this.myFunc} />
-   	);
+  myFunc (e) {
+    console.log(e.target.value)
+    console.log('love coming in to this callback')
   }
-});
+
+  static propTypes = {
+    items: PropTypes.array
+  }
+
+  render() {
+    return (
+      <div>
+        <Search items={this.props.items} placeHolder="Search for a programming language" onChange={this.myFunc} />
+      </div>
+    );
+  }
+}
 
 let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
-React.render(<TestComponent items={ITEMS} />, document.getElementById('container'))
+ReactDOM.render(<TestComponent items={ITEMS} />, document.getElementById('root'));
+//ReactDOM.render(<Search items={ITEMS}/>, document.getElementById('root'));

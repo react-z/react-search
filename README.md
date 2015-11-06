@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/react-search.svg)](https://badge.fury.io/js/react-search)
 
-react-search is a simple search box autocomplete component using react.js.
+react-search is a simple search autocomplete component using react.js.
 
 ## Installation
 
@@ -12,34 +12,23 @@ react-search is a simple search box autocomplete component using react.js.
 
 ```javascript
 
-import React from 'react'
 import Search from 'react-search'
-
-let TestComponent = React.createClass({
-
-  myFunc:function(e) {
-    console.log(e.target.value);
-  },
-
-  render: function() {
-    return (
-      <Search items={this.props.items} onChange={this.myFunc} />
-    );
-  }
-});
+import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
 
 let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
-React.render(<TestComponent items={ITEMS} />, document.getElementById('container'))
+
+ReactDOM.render(<Search items={ITEMS}/>, document.getElementById('root'));
 
 ```
 
 ## Callbacks onClick and onChange
 
-You can specify callback functions for onClick of the element and onChange of the search input. The element passed in is the SyntheticKeyboardEvent, which you can use to get the target or value.
+You can specify callback functions for onClick of the element and onChange of the search input. The element passed in is the SyntheticKeyboardEvent, which you can use to get the target or value. Check out the [example](https://github.com/StevenIseki/react-search/tree/master/example)
 
 ## Styles
 
-react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide.
+react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide. The styles follow [BEM](https://en.bem.info/method/definitions/) naming conventions.
 
 ## Development
     
