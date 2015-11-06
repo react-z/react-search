@@ -7,6 +7,7 @@ import Search from '../lib/search'
 import SearchItemInArray from '../src/SearchItemInArray'
 
 const {
+  // Simulate,
   findRenderedDOMComponentWithTag,
   scryRenderedDOMComponentsWithTag,
   renderIntoDocument
@@ -33,3 +34,22 @@ test('renders text input, autocomplete, and an empty list of items', t => {
   t.ok(listOfItems.length === 0)
   t.end()
 })
+
+// Currently skipped b/c it throws a weird rendering error
+// test('searching for items populates the autocomplete list', t => {
+//   const component = renderIntoDocument(
+//     <Search
+//         items={items}
+//     />
+//   )
+//   const value = 'ste'
+//   const input = component.refs.searchInput
+//   Simulate.keyUp(input, {
+//     target: { value }
+//   })
+//   const listOfItems = scryRenderedDOMComponentsWithTag(component, 'li')
+//   t.ok(listOfItems)
+//   t.ok(listOfItems.length !== 0)
+//   t.ok(listOfItems.length === 2)
+//   t.end()
+// })
