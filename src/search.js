@@ -10,7 +10,7 @@ class Search extends Component {
   static defaultProps () {
     let classPrefix = 'react-search'
     return {
-      ItemElement: React.DOM.a,
+      ItemElement: 'a',
       classPrefix,
       hiddenClassName: `${classPrefix}__menu--hidden`,
       openClassName: `${classPrefix}__menu--open`
@@ -26,7 +26,10 @@ class Search extends Component {
       onClick: PropTypes.func,
       hiddenClassName: PropTypes.string,
       openClassName: PropTypes.string,
-      ItemElement: PropTypes.element,
+      ItemElement: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.string
+      ]),
       itemElemProps: PropTypes.object,
       inputProps: PropTypes.object,
       itemProps: PropTypes.object,
