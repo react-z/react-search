@@ -16,7 +16,7 @@ class Search extends Component {
   static propTypes () {
     return {
       classPrefix: PropTypes.string,
-      items: PropTypes.array,
+      items: PropTypes.array.required,
       placeHolder: PropTypes.string,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
