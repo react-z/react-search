@@ -9,8 +9,10 @@ class TestComponent extends Component {
     console.log('love coming in to this callback')
   }
 
-  static propTypes = {
-    items: PropTypes.array
+  static propTypes () {
+    return {
+      items: PropTypes.array
+    }
   }
 
   render() {

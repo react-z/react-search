@@ -8,15 +8,26 @@ import ReactDOM from 'react-dom';
 
 class Search extends Component {
 
-  static defaultProps = {
-    className: "react-search"
+  static defaultProps () {
+    return {
+      className: 'react-search'
+    }
   }
 
-  static propTypes = {
-    items: PropTypes.array,
-    placeHolder: PropTypes.string,
-    onChange: PropTypes.func,
-    onClick: PropTypes.func
+  static propTypes () {
+    return {
+      items: PropTypes.array,
+      placeHolder: PropTypes.string,
+      onChange: PropTypes.func,
+      onClick: PropTypes.func
+    }
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      matchingItems: []
+    }
   }
 
   changeInput (e) {
@@ -41,10 +52,6 @@ class Search extends Component {
     autocomplete.className = `${this.props.className}__menu ${this.props.className}__menu--hidden`
     let result = e.target.innerHTML
     this.refs.searchInput.value = result
-  }
-
-  state = {
-    matchingItems: []
   }
 
   render() {
