@@ -34,6 +34,7 @@
   "scripts": {
     "build": "babel src --out-dir lib",
     "example": "webpack --config ./example/webpack.config.js",
+    "prepublish": "npm run build",
     "serve": "node ./example/server.js",
     "start": "npm run example && npm run serve",
     "style": "standard",
