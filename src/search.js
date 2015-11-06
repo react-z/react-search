@@ -9,17 +9,25 @@ class Search extends Component {
 
   static defaultProps () {
     return {
-      className: 'react-search'
+      ItemElement: React.DOM.a,
+      classPrefix: 'react-search'
     }
   }
 
   static propTypes () {
     return {
-      className: PropTypes.string,
-      items: PropTypes.array,
+      classPrefix: PropTypes.string,
+      items: PropTypes.array.required,
       placeHolder: PropTypes.string,
       onChange: PropTypes.func,
-      onClick: PropTypes.func
+      onClick: PropTypes.func,
+      ItemElement: PropTypes.element,
+      itemElemProps: PropTypes.object,
+      inputProps: PropTypes.object,
+      itemProps: PropTypes.object,
+      autoCompleteListProps: PropTypes.object,
+      autoCompleteProps: PropTypes.object,
+      wrapperProps: PropTypes.object
     }
   }
 
@@ -36,7 +44,7 @@ class Search extends Component {
     }
 
     let autocomplete = this.refs.autocomplete
-    autocomplete.className = `${this.props.className}__menu ${this.props.className}__menu--open`
+    autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--open`
     let searchValue = this.refs.searchInput.value
     let result = SearchItemInArray(this.props.items, searchValue)
     this.setState({matchingItems: result})
@@ -48,23 +56,32 @@ class Search extends Component {
     }
 
     let autocomplete = this.refs.autocomplete
-    autocomplete.className = `${this.props.className}__menu ${this.props.className}__menu--hidden`
+    autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--hidden`
     let result = e.target.innerHTML
     this.refs.searchInput.value = result
   }
 
   render () {
-    const inputClassName = `${this.props.className}__input`
-    const menuClassName = `${this.props.className}__menu ${this.props.className}__menu--hidden`
+    const {
+      ItemElement,
+      inputProps = {},
+      itemElemProps = {},
+      itemProps = {},
+      autoCompleteListProps = {},
+      autoCompleteProps = {},
+      wrapperProps = {}
+    } = this.props
+    const inputClassName = `${this.props.classPrefix}__input`
+    const menuClassName = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--hidden`
 
     let items = this.state.matchingItems.map((item, i) => (
-      <li key={i} className={`${this.props.className}__menu-item`}>
-        <a onClick={this.selectAutoComplete.bind(this)}>{item}</a>
+      <li key={i} className={`${this.props.classPrefix}__menu-item`} {...itemProps}>
+        <ItemElement {...itemElemProps} onClick={this.selectAutoComplete.bind(this)}>{item}</ItemElement>
       </li>
     ))
 
     return (
-      <div className={this.props.className}>
+      <div className={this.props.classPrefix} {...wrapperProps}>
 
        <input
             type='text'
@@ -72,10 +89,13 @@ class Search extends Component {
             placeholder={this.props.placeHolder}
             ref='searchInput'
             onKeyUp={this.changeInput.bind(this)}
+            {...inputProps}
         />
 
-        <div className={menuClassName} ref='autocomplete'>
-          <ul className={`${this.props.className}__menu-items`}>{items}</ul>
+        <div className={menuClassName} ref='autocomplete' {...autoCompleteProps}>
+          <ul className={`${this.props.classPrefix}__menu-items`} {...autoCompleteListProps}>
+            {items}
+          </ul>
         </div>
 
       </div>
