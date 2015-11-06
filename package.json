@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "a simple search component",
   "main": "lib/search.js",
+  "jsnext:main": "src/search.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/StevenIseki/react-search.git"
