@@ -25,10 +25,10 @@ ReactDOM.render(<Search items={ITEMS}/>, document.getElementById('root'));
 
 ## Basic Props
 
-### `items` (required)
+#### `items` (required)
 List of Items to filter through
 
-### `classPrefix`
+#### `classPrefix`
 default: `react-search`
 Optional class prefix for included class names. Will also be attached to the main wrapper element. Included class suffixes are:
   - `__input`
@@ -36,16 +36,16 @@ Optional class prefix for included class names. Will also be attached to the mai
   - `__menu-item`
   - `__menu--hidden`
 
-### `placeHolder`
+#### `placeHolder`
 Placeholder attribute for the text input
 
-### `onChange`
+#### `onChange`
 Update handler for the text input. Fired before the internal logic to update the autocomplete list
 
-### `onClick`
+#### `onClick`
 Click handler for each item in the autocomplete list. Fired before the internal logic to hide the autocomplete list
 
-### `ItemElement`
+#### `ItemElement`
 default: `React.DOM.a`
 Custom element to use for each `<li>` in the autocomplete list
 
@@ -53,22 +53,22 @@ Custom element to use for each `<li>` in the autocomplete list
 
 All of the following allow you to extend ([via spread operator](https://facebook.github.io/react/docs/transferring-props.html)) the properties of the individual elements that make up the `Search` component.
 
-### `inputProps`
+#### `inputProps`
 Property extensions for the text input
 
-### `itemProps`
+#### `itemProps`
 Property extensions for the each individual autocomplete `<li>`
 
-### `itemElemProps`
+#### `itemElemProps`
 Property extensions for the each child element of autocomplete `<li>`
 
-### `autoCompleteListProps`
+#### `autoCompleteListProps`
 Property extensions for the autocomplete `<ul>`
 
-### `autoCompleteProps`
+#### `autoCompleteProps`
 Property extensions for the autocomplete wrapper
 
-### `wrapperProps`
+#### `wrapperProps`
 Property extensions for the wrapper that is the root of the `<Search>` component
 
 ## Callbacks onClick and onChange
