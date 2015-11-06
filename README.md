@@ -16,7 +16,7 @@ import Search from 'react-search'
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 
-let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
+let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'julia', 'c', 'scala','haskell']
 
 ReactDOM.render(<Search items={ITEMS}/>, document.getElementById('root'));
 
@@ -28,11 +28,12 @@ You can specify callback functions for onClick of the element and onChange of th
 
 ## Styles
 
-react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide. The styles follow [BEM](https://en.bem.info/method/definitions/) naming conventions.
+react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
 
 ## Development
     
     npm install
+    npm run build
     npm test
     npm start
 
