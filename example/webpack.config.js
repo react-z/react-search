@@ -1,5 +1,3 @@
-var path = require('path');
-
 module.exports = {
   devtool: 'source-map',
   context: __dirname,
@@ -17,4 +15,4 @@ module.exports = {
       }
     ]
   }
-};
+}

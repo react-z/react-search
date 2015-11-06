@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "babel-core": "^5.6.7",
+    "babel-eslint": "^4.1.4",
     "babel-loader": "^5.1.4",
     "express": "^4.7.2",
     "react": "^0.14.0",
@@ -27,7 +28,15 @@
     "build": "babel src --out-dir lib",
     "example": "webpack --config ./example/webpack.config.js",
     "serve": "node ./example/server.js",
-    "start": "npm run example && npm run serve"
+    "start": "npm run example && npm run serve",
+    "style": "standard"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "ignore": [
+      "lib",
+      "example/public"
+    ]
   },
   "keywords": [
     "javascript",

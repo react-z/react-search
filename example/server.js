@@ -1,14 +1,14 @@
-var express = require('express');
-var path = require('path');
+var express = require('express')
+var path = require('path')
 
-port = process.env.PORT || 5000;
+var port = process.env.PORT || 5000
 
 express()
   .use('/public', express.static(__dirname + '/public'))
-  .get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '/index.html'));
+  .get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, '/index.html'))
   })
-  .listen(port, function() {
-    console.log("Listening on " + port + ".");
-    console.log("Go to <http://localhost:" + port + "> in your browser.");
-  });
+  .listen(port, function () {
+    console.log('Listening on ' + port + '.')
+    console.log('Go to <http://localhost:' + port + '> in your browser.')
+  })

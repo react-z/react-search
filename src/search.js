@@ -3,8 +3,7 @@
  * A simple search component.
 **/
 import SearchItemInArray from './SearchItemInArray'
-import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component, PropTypes } from 'react'
 
 class Search extends Component {
 
@@ -16,6 +15,7 @@ class Search extends Component {
 
   static propTypes () {
     return {
+      className: PropTypes.string,
       items: PropTypes.array,
       placeHolder: PropTypes.string,
       onChange: PropTypes.func,
@@ -31,7 +31,7 @@ class Search extends Component {
   }
 
   changeInput (e) {
-    if(typeof this.props.onChange !== 'undefined'){
+    if (typeof this.props.onChange !== 'undefined') {
       this.props.onChange(e)
     }
 
@@ -43,8 +43,7 @@ class Search extends Component {
   }
 
   selectAutoComplete (e) {
-
-    if(typeof this.props.onClick !== 'undefined'){
+    if (typeof this.props.onClick !== 'undefined') {
       this.props.onClick(e)
     }
 
@@ -54,8 +53,7 @@ class Search extends Component {
     this.refs.searchInput.value = result
   }
 
-  render() {
-
+  render () {
     const inputClassName = `${this.props.className}__input`
     const menuClassName = `${this.props.className}__menu ${this.props.className}__menu--hidden`
 
@@ -68,19 +66,20 @@ class Search extends Component {
     return (
       <div className={this.props.className}>
 
-       <input type="text"
-              className={inputClassName}
-              placeholder={this.props.placeHolder}
-              ref="searchInput"
-              onKeyUp={this.changeInput.bind(this)} />
+       <input
+            type='text'
+            className={inputClassName}
+            placeholder={this.props.placeHolder}
+            ref='searchInput'
+            onKeyUp={this.changeInput.bind(this)}
+        />
 
-        <div className={menuClassName} ref="autocomplete">
+        <div className={menuClassName} ref='autocomplete'>
           <ul className={`${this.props.className}__menu-items`}>{items}</ul>
         </div>
 
       </div>
-    );
-
+    )
   }
 }
 
