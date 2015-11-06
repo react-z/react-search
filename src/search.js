@@ -7,21 +7,26 @@ import React, { Component, PropTypes } from 'react'
 
 class Search extends Component {
 
-  static defaultProps () {
+  static get defaultProps () {
     return {
-      ItemElement: React.DOM.a,
+      ItemElement: 'a',
       classPrefix: 'react-search'
     }
   }
 
-  static propTypes () {
+  static get propTypes () {
     return {
       classPrefix: PropTypes.string,
-      items: PropTypes.array.required,
+      items: PropTypes.array.isRequired,
       placeHolder: PropTypes.string,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
-      ItemElement: PropTypes.element,
+      hiddenClassName: PropTypes.string,
+      openClassName: PropTypes.string,
+      ItemElement: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.string
+      ]),
       itemElemProps: PropTypes.object,
       inputProps: PropTypes.object,
       itemProps: PropTypes.object,
@@ -33,6 +38,12 @@ class Search extends Component {
 
   constructor (props) {
     super(props)
+    if (this.props.hiddenClassName == null) {
+      this.props.hiddenClassName = `${this.props.classPrefix}__menu--hidden`
+    }
+    if (this.props.openClassName == null) {
+      this.props.openClassName = `${this.props.classPrefix}__menu--open`
+    }
     this.state = {
       matchingItems: []
     }
@@ -44,7 +55,7 @@ class Search extends Component {
     }
 
     let autocomplete = this.refs.autocomplete
-    autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--open`
+    autocomplete.className = toggleAutoCompleteClass(autocomplete.className, false, this.props)
     let searchValue = this.refs.searchInput.value
     let result = SearchItemInArray(this.props.items, searchValue)
     this.setState({matchingItems: result})
@@ -56,7 +67,7 @@ class Search extends Component {
     }
 
     let autocomplete = this.refs.autocomplete
-    autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--hidden`
+    autocomplete.className = toggleAutoCompleteClass(autocomplete.className, true, this.props)
     let result = e.target.innerHTML
     this.refs.searchInput.value = result
   }
@@ -72,7 +83,7 @@ class Search extends Component {
       wrapperProps = {}
     } = this.props
     const inputClassName = `${this.props.classPrefix}__input`
-    const menuClassName = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--hidden`
+    const menuClassName = `${this.props.classPrefix}__menu ${this.props.hiddenClassName}`
 
     let items = this.state.matchingItems.map((item, i) => (
       <li key={i} className={`${this.props.classPrefix}__menu-item`} {...itemProps}>
@@ -101,6 +112,13 @@ class Search extends Component {
       </div>
     )
   }
+}
+
+function toggleAutoCompleteClass (className, isOpen, props) {
+  if (isOpen) {
+    return className.replace(props.openClassName, props.hiddenClassName)
+  }
+  return className.replace(props.hiddenClassName, props.openClassName)
 }
 
 module.exports = Search

@@ -46,8 +46,8 @@ Update handler for the text input. Fired before the internal logic to update the
 Click handler for each item in the autocomplete list. Fired before the internal logic to hide the autocomplete list
 
 #### `ItemElement`
-default: `React.DOM.a`
-Custom element to use for each `<li>` in the autocomplete list
+default: `'a'`
+Custom element to use for each `<li>` in the autocomplete list. Can be a React Element or a valid DOM tag as a string, such as `<CustomElement>` or `'div'`
 
 ## Advanced Props
 
