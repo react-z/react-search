@@ -19,7 +19,12 @@ class Search extends Component {
       items: PropTypes.array,
       placeHolder: PropTypes.string,
       onChange: PropTypes.func,
-      onClick: PropTypes.func
+      onClick: PropTypes.func,
+      inputProps: PropTypes.object,
+      itemProps: PropTypes.object,
+      autoCompleteListProps: PropTypes.object,
+      autoCompleteProps: PropTypes.object,
+      wrapperProps: PropTypes.object
     }
   }
 
@@ -54,17 +59,24 @@ class Search extends Component {
   }
 
   render () {
+    const {
+      inputProps = {},
+      itemProps = {},
+      autoCompleteListProps = {},
+      autoCompleteProps = {},
+      wrapperProps = {}
+    } = this.props
     const inputClassName = `${this.props.className}__input`
     const menuClassName = `${this.props.className}__menu ${this.props.className}__menu--hidden`
 
     let items = this.state.matchingItems.map((item, i) => (
-      <li key={i} className={`${this.props.className}__menu-item`}>
+      <li key={i} className={`${this.props.className}__menu-item`} {...itemProps}>
         <a onClick={this.selectAutoComplete.bind(this)}>{item}</a>
       </li>
     ))
 
     return (
-      <div className={this.props.className}>
+      <div className={this.props.className} {...wrapperProps}>
 
        <input
             type='text'
@@ -72,10 +84,13 @@ class Search extends Component {
             placeholder={this.props.placeHolder}
             ref='searchInput'
             onKeyUp={this.changeInput.bind(this)}
+            {...inputProps}
         />
 
-        <div className={menuClassName} ref='autocomplete'>
-          <ul className={`${this.props.className}__menu-items`}>{items}</ul>
+        <div className={menuClassName} ref='autocomplete' {...autoCompleteProps}>
+          <ul className={`${this.props.className}__menu-items`} {...autoCompleteListProps}>
+            {items}
+          </ul>
         </div>
 
       </div>
