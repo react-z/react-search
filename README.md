@@ -1,6 +1,7 @@
 # react-search
 
 [![npm version](https://badge.fury.io/js/react-search.svg)](https://badge.fury.io/js/react-search)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 react-search is a simple search autocomplete component using react.js.
 
@@ -10,7 +11,7 @@ react-search is a simple search autocomplete component using react.js.
 
 ## Usage
 
-```javascript
+```jsx
 
 import Search from 'react-search'
 import ReactDOM from 'react-dom';
@@ -31,7 +32,6 @@ You can specify callback functions for onClick of the element and onChange of th
 react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
 
 ## Development
-    
     npm install
     npm run build
     npm test

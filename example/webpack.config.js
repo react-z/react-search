@@ -1,5 +1,3 @@
-var path = require('path');
-
 module.exports = {
   devtool: 'source-map',
   context: __dirname,
@@ -13,8 +11,8 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel'       
+        loader: 'babel'
       }
     ]
   }
-};
+}

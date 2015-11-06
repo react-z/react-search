@@ -1,6 +1,6 @@
 import Search from '../lib/search'
-import ReactDOM from 'react-dom';
-import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom'
+import React, { Component, PropTypes } from 'react'
 
 class TestComponent extends Component {
 
@@ -9,19 +9,24 @@ class TestComponent extends Component {
     console.log('love coming in to this callback')
   }
 
-  static propTypes = {
-    items: PropTypes.array
+  static propTypes () {
+    return {
+      items: PropTypes.array
+    }
   }
 
-  render() {
+  render () {
     return (
       <div>
-        <Search items={this.props.items} placeHolder="Search for a programming language" onChange={this.myFunc} />
+        <Search
+            items={this.props.items}
+            placeHolder='Search for a programming language'
+            onChange={this.myFunc}
+        />
       </div>
-    );
+    )
   }
 }
 
-let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
-ReactDOM.render(<TestComponent items={ITEMS} />, document.getElementById('root'));
-//ReactDOM.render(<Search items={ITEMS}/>, document.getElementById('root'));
+let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala', 'haskell']
+ReactDOM.render(<TestComponent items={ITEMS} />, document.getElementById('root'))
