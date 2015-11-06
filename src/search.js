@@ -9,6 +9,7 @@ class Search extends Component {
 
   static defaultProps () {
     return {
+      ItemElement: React.DOM.a,
       classPrefix: 'react-search'
     }
   }
@@ -20,6 +21,8 @@ class Search extends Component {
       placeHolder: PropTypes.string,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
+      ItemElement: PropTypes.element,
+      itemElemProps: PropTypes.object,
       inputProps: PropTypes.object,
       itemProps: PropTypes.object,
       autoCompleteListProps: PropTypes.object,
@@ -60,7 +63,9 @@ class Search extends Component {
 
   render () {
     const {
+      ItemElement,
       inputProps = {},
+      itemElemProps = {},
       itemProps = {},
       autoCompleteListProps = {},
       autoCompleteProps = {},
@@ -71,7 +76,7 @@ class Search extends Component {
 
     let items = this.state.matchingItems.map((item, i) => (
       <li key={i} className={`${this.props.classPrefix}__menu-item`} {...itemProps}>
-        <a onClick={this.selectAutoComplete.bind(this)}>{item}</a>
+        <ItemElement {...itemElemProps} onClick={this.selectAutoComplete.bind(this)}>{item}</ItemElement>
       </li>
     ))
 

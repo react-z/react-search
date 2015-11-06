@@ -45,6 +45,10 @@ Update handler for the text input. Fired before the internal logic to update the
 ### `onClick`
 Click handler for each item in the autocomplete list. Fired before the internal logic to hide the autocomplete list
 
+### `ItemElement`
+default: `React.DOM.a`
+Custom element to use for each `<li>` in the autocomplete list
+
 ## Advanced Props
 
 All of the following allow you to extend ([via spread operator](https://facebook.github.io/react/docs/transferring-props.html)) the properties of the individual elements that make up the `Search` component.
@@ -54,6 +58,9 @@ Property extensions for the text input
 
 ### `itemProps`
 Property extensions for the each individual autocomplete `<li>`
+
+### `itemElemProps`
+Property extensions for the each child element of autocomplete `<li>`
 
 ### `autoCompleteListProps`
 Property extensions for the autocomplete `<ul>`
