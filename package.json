@@ -17,6 +17,7 @@
     "babel-eslint": "^4.1.4",
     "babel-loader": "^5.1.4",
     "express": "^4.7.2",
+    "pre-commit": "^1.1.2",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "standard": "^5.3.1",
@@ -31,6 +32,10 @@
     "start": "npm run example && npm run serve",
     "style": "standard"
   },
+  "pre-commit": [
+    "style",
+    "test"
+  ],
   "standard": {
     "parser": "babel-eslint",
     "ignore": [
