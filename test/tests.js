@@ -19,6 +19,11 @@ test('search items in array returns correctly', t => {
   t.end()
 })
 
+test('return empty list for empty string search', t => {
+  t.same(SearchItemInArray(items, '   '), [])
+  t.end()
+})
+
 test('renders text input, autocomplete, and an empty list of items', t => {
   const component = renderIntoDocument(
     <Search

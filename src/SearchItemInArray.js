@@ -1,4 +1,7 @@
 var SearchItemInArray = function (items, input) {
+  if (input.trim() === '') {
+    return []
+  }
   var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ''), 'i')
 
   return items.filter(function (item) {
