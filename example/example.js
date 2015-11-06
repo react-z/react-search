@@ -26,4 +26,3 @@ class TestComponent extends Component {
 
 let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala','haskell']
 ReactDOM.render(<TestComponent items={ITEMS} />, document.getElementById('root'));
-//ReactDOM.render(<Search items={ITEMS}/>, document.getElementById('root'));
