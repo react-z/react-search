@@ -31,7 +31,6 @@ You can specify callback functions for onClick of the element and onChange of th
 react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide. The styles follow [BEM](https://en.bem.info/method/definitions/) naming conventions.
 
 ## Development
-    
     npm install
     npm test
     npm start

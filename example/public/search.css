@@ -26,10 +26,10 @@
   margin: 0em;
 }
 
-.react-search__menu-item a:hover, 
-.react-search__menu-item a:visited { 
+.react-search__menu-item a:hover,
+.react-search__menu-item a:visited {
   font-weight: bold;
-} 
+}
 
 .react-search__menu--open {
   visibility: visible;

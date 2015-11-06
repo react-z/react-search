@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 
 class Search extends Component {
 
-  static defaultProps = { 
+  static defaultProps = {
     className: "react-search"
   }
 
