@@ -113,9 +113,9 @@ class Search extends Component {
 
 function toggleAutoCompleteClass (className, isOpen, props) {
   if (isOpen) {
-    return className.repalce(props.openClassName, props.hiddenClassName)
+    return className.replace(props.openClassName, props.hiddenClassName)
   }
-  return className.repalce(props.hiddenClassName, props.openClassName)
+  return className.replace(props.hiddenClassName, props.openClassName)
 }
 
 module.exports = Search
