@@ -7,7 +7,7 @@ import React, { Component, PropTypes } from 'react'
 
 class Search extends Component {
 
-  static defaultProps () {
+  static get defaultProps () {
     let classPrefix = 'react-search'
     return {
       ItemElement: 'a',
@@ -17,7 +17,7 @@ class Search extends Component {
     }
   }
 
-  static propTypes () {
+  static get propTypes () {
     return {
       classPrefix: PropTypes.string,
       items: PropTypes.array.required,
