@@ -10,7 +10,7 @@ react-search is a simple search autocomplete component using react.js.
 
 ## Usage
 
-```javascript
+```jsx
 
 import Search from 'react-search'
 import ReactDOM from 'react-dom';
