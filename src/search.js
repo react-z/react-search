@@ -8,12 +8,9 @@ import React, { Component, PropTypes } from 'react'
 class Search extends Component {
 
   static get defaultProps () {
-    let classPrefix = 'react-search'
     return {
       ItemElement: 'a',
-      classPrefix,
-      hiddenClassName: `${classPrefix}__menu--hidden`,
-      openClassName: `${classPrefix}__menu--open`
+      classPrefix: 'react-search'
     }
   }
 
@@ -41,6 +38,12 @@ class Search extends Component {
 
   constructor (props) {
     super(props)
+    if (this.props.hiddenClassName == null) {
+      this.props.hiddenClassName = `${this.props.classPrefix}__menu--hidden`
+    }
+    if (this.props.openClassName == null) {
+      this.props.openClassName = `${this.props.classPrefix}__menu--open`
+    }
     this.state = {
       matchingItems: []
     }
