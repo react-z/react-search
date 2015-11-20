@@ -1,8 +1,9 @@
 /**
- * Search module
+ * Search component
  * A simple search component.
 **/
 import SearchItemInArray from './SearchItemInArray'
+import SearchItemInArrayObjects from './SearchItemInArrayObjects'
 import React, { Component, PropTypes } from 'react'
 
 class Search extends Component {
@@ -18,93 +19,99 @@ class Search extends Component {
     return {
       classPrefix: PropTypes.string,
       items: PropTypes.array.isRequired,
+      searchKey: PropTypes.string,
+      keys: PropTypes.array,
       placeHolder: PropTypes.string,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
-      hiddenClassName: PropTypes.string,
-      openClassName: PropTypes.string,
       ItemElement: PropTypes.oneOfType([
         PropTypes.element,
         PropTypes.string
-      ]),
-      itemElemProps: PropTypes.object,
-      inputProps: PropTypes.object,
-      itemProps: PropTypes.object,
-      autoCompleteListProps: PropTypes.object,
-      autoCompleteProps: PropTypes.object,
-      wrapperProps: PropTypes.object
+      ])
     }
   }
 
   constructor (props) {
     super(props)
-    if (this.props.hiddenClassName == null) {
-      this.props.hiddenClassName = `${this.props.classPrefix}__menu--hidden`
-    }
-    if (this.props.openClassName == null) {
-      this.props.openClassName = `${this.props.classPrefix}__menu--open`
-    }
-    this.state = {
-      matchingItems: []
-    }
+    this.state = { matchingItems: [] }
   }
 
   changeInput (e) {
-    if (typeof this.props.onChange !== 'undefined') {
+    if (this.props.onChange !== undefined) {
       this.props.onChange(e)
     }
 
-    let autocomplete = this.refs.autocomplete
-    autocomplete.className = toggleAutoCompleteClass(autocomplete.className, false, this.props)
+    this.refs.autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--open`
     let searchValue = this.refs.searchInput.value
-    let result = SearchItemInArray(this.props.items, searchValue)
+
+    let result
+
+    if ((this.props.keys !== undefined && this.props.searchKey !== undefined)) {
+      /* hash */
+      result = SearchItemInArrayObjects(this.props.items, searchValue, this.props.searchKey)
+    } else {
+      /* array */
+      result = SearchItemInArray(this.props.items, searchValue)
+    }
+
     this.setState({matchingItems: result})
   }
 
   selectAutoComplete (e) {
-    if (typeof this.props.onClick !== 'undefined') {
+    if (this.props.onClick !== undefined) {
       this.props.onClick(e)
     }
 
-    let autocomplete = this.refs.autocomplete
-    autocomplete.className = toggleAutoCompleteClass(autocomplete.className, true, this.props)
+    this.refs.autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--hidden`
     let result = e.target.innerHTML
     this.refs.searchInput.value = result
   }
 
   render () {
-    const {
-      ItemElement,
-      inputProps = {},
-      itemElemProps = {},
-      itemProps = {},
-      autoCompleteListProps = {},
-      autoCompleteProps = {},
-      wrapperProps = {}
-    } = this.props
+    const { ItemElement } = this.props
     const inputClassName = `${this.props.classPrefix}__input`
-    const menuClassName = `${this.props.classPrefix}__menu ${this.props.hiddenClassName}`
+    const menuClassName = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--hidden`
 
-    let items = this.state.matchingItems.map((item, i) => (
-      <li key={i} className={`${this.props.classPrefix}__menu-item`} {...itemProps}>
-        <ItemElement {...itemElemProps} onClick={this.selectAutoComplete.bind(this)}>{item}</ItemElement>
-      </li>
-    ))
+    let items = []
+
+    if ((this.props.keys !== undefined)) {
+      /* items for hash results */
+      items = this.state.matchingItems.map((item, i) => {
+        return (
+          <li key={i} className={`${this.props.classPrefix}__menu-item`}>
+            {
+              this.props.keys.map((itemKey, j) => {
+                return (
+                  <ItemElement key={j} onClick={this.selectAutoComplete.bind(this)}>
+                  { item[itemKey] }
+                  </ItemElement>
+                )
+              })
+            }
+          </li>
+        )
+      })
+    } else {
+      /* items for a simple array */
+      items = this.state.matchingItems.map((item, i) => (
+        <li key={i} className={`${this.props.classPrefix}__menu-item`}>
+          <ItemElement onClick={this.selectAutoComplete.bind(this)}>{item}</ItemElement>
+        </li>
+      ))
+    }
 
     return (
-      <div className={this.props.classPrefix} {...wrapperProps}>
+      <div className={this.props.classPrefix}>
 
        <input
             type='text'
             className={inputClassName}
             placeholder={this.props.placeHolder}
             ref='searchInput'
-            onKeyUp={this.changeInput.bind(this)}
-            {...inputProps}
-        />
+            onKeyUp={this.changeInput.bind(this)} />
 
-        <div className={menuClassName} ref='autocomplete' {...autoCompleteProps}>
-          <ul className={`${this.props.classPrefix}__menu-items`} {...autoCompleteListProps}>
+        <div className={menuClassName} ref='autocomplete'>
+          <ul className={`${this.props.classPrefix}__menu-items`}>
             {items}
           </ul>
         </div>
@@ -112,13 +119,6 @@ class Search extends Component {
       </div>
     )
   }
-}
-
-function toggleAutoCompleteClass (className, isOpen, props) {
-  if (isOpen) {
-    return className.replace(props.openClassName, props.hiddenClassName)
-  }
-  return className.replace(props.hiddenClassName, props.openClassName)
 }
 
 module.exports = Search

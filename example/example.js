@@ -11,7 +11,9 @@ class TestComponent extends Component {
 
   static propTypes () {
     return {
-      items: PropTypes.array
+      items: PropTypes.array,
+      keys: PropTypes.array,
+      searchKey: PropTypes.string
     }
   }
 
@@ -20,13 +22,31 @@ class TestComponent extends Component {
       <div>
         <Search
             items={this.props.items}
+            keys={this.props.keys}
+            searchKey={this.props.searchKey}
             placeHolder='Search for a programming language'
-            onChange={this.myFunc}
-        />
+            onChange={this.myFunc} />
       </div>
     )
   }
 }
 
+// simple array example
+
 let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala', 'haskell']
 ReactDOM.render(<TestComponent items={ITEMS} />, document.getElementById('root'))
+
+/* 
+
+// array of objects example
+
+let ITEMS = [ 
+  { title: 'javascript', description: 'an awesome language' },
+  { title: 'ruby', description: 'a cool language' },
+  { title: 'haskell', description: 'a functional language' }
+]
+let KEYS = ['title', 'description']
+let KEY = 'title'
+
+ReactDOM.render(<TestComponent items={ITEMS} keys={KEYS} searchKey={KEY} />, document.getElementById('root'))
+*/

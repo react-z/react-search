@@ -1,5 +1,7 @@
 require('./_test-helper')
 import test from 'ava'
+
+
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
 
@@ -7,7 +9,6 @@ import Search from '../lib/search'
 import SearchItemInArray from '../src/SearchItemInArray'
 
 const {
-  // Simulate,
   findRenderedDOMComponentWithTag,
   scryRenderedDOMComponentsWithTag,
   renderIntoDocument
@@ -26,9 +27,7 @@ test('return empty list for empty string search', t => {
 
 test('renders text input, autocomplete, and an empty list of items', t => {
   const component = renderIntoDocument(
-    <Search
-        items={items}
-    />
+    <Search items={items} />
   )
   const input = findRenderedDOMComponentWithTag(component, 'input')
   const autocomplete = component.refs.autocomplete
@@ -43,8 +42,7 @@ test('renders text input, autocomplete, and an empty list of items', t => {
 // Currently skipped b/c it throws a weird rendering error
 // test('searching for items populates the autocomplete list', t => {
 //   const component = renderIntoDocument(
-//     <Search
-//         items={items}
+//     <Search items={items}
 //     />
 //   )
 //   const value = 'ste'
