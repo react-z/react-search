@@ -81,7 +81,7 @@ Custom element to use for each `<li>` in the autocomplete list. Can be a React E
 
 ## Styles
 
-react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
+react-search can be used with your own custom styles. A minimal [search.css](https://github.com/StevenIseki/react-search/blob/master/example/public/search.css) style sheet is in the example as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
 
 ## Development
     npm install
