@@ -45,10 +45,10 @@ ReactDOM.render(<Search items={ITEMS} keys={KEYS} searchKey={KEY} />, document.g
 
 ## Versions
 
-#### `1.0.2` 
+**`1.0.2`** 
 Uses React ^0.13.0
 
-#### `1.0.5` 
+**`>1.0.3`**
 Uses React ^0.14.0
 
 ## Props
