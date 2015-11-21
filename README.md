@@ -40,16 +40,21 @@ let KEYS = ['title', 'description']
 
 let KEY = 'title' /* search by title */
 
-ReactDOM.render(<Search items={ITEMS} keys={KEYS} searchKey={KEY} />, document.getElementById('root'));
+ReactDOM.render(<Search 'Search for a programming language' 
+						items={ITEMS} 
+						keys={KEYS} 
+						searchKey={KEY} />, 
+				document.getElementById('root')
+				);
 ```
 
 ## Versions
 
-**`1.0.2`** 
-uses React `^0.13.0`
+#### `1.0.2` 
+Uses React ^0.13.0
 
-**`>1.0.3`**
-uses React ^`0.14.0`
+#### `1.0.5` 
+Uses React ^0.14.0
 
 ## Props
 
@@ -66,8 +71,8 @@ The search key to match when searhching, if using an array of objects.
 default: `react-search`
 Optional class prefix for included class names. Will be attached to the main wrapper element.
 
-#### `placeHolder`
-Placeholder attribute for the text input
+#### `placeholder`
+placeholder attribute for the text input
 
 #### `onChange`
 Update handler for the text input. Fired before the internal logic to update the autocomplete list. Callback value passed back is the SyntheticKeyboardEvent, which you can use to get the target or value.
@@ -81,7 +86,7 @@ Custom element to use for each `<li>` in the autocomplete list. Can be a React E
 
 ## Styles
 
-react-search can be used with your own custom styles. A minimal [search.css](https://github.com/StevenIseki/react-search/blob/master/example/public/search.css) style sheet is in the example as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
+react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
 
 ## Development
     npm install

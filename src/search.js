@@ -21,7 +21,7 @@ class Search extends Component {
       items: PropTypes.array.isRequired,
       searchKey: PropTypes.string,
       keys: PropTypes.array,
-      placeHolder: PropTypes.string,
+      placeholder: PropTypes.string,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
       ItemElement: PropTypes.oneOfType([
@@ -106,7 +106,7 @@ class Search extends Component {
        <input
             type='text'
             className={inputClassName}
-            placeholder={this.props.placeHolder}
+            placeholder={this.props.placeholder}
             ref='searchInput'
             onKeyUp={this.changeInput.bind(this)} />
 

@@ -93,7 +93,7 @@
 	          items: this.props.items,
 	          keys: this.props.keys,
 	          searchKey: this.props.searchKey,
-	          placeHolder: 'Search for a programming language',
+	          placeholder: 'Search for a programming language',
 	          onChange: this.myFunc })
 	      );
 	    }
@@ -205,7 +205,7 @@
 	        items: _react.PropTypes.array.isRequired,
 	        searchKey: _react.PropTypes.string,
 	        keys: _react.PropTypes.array,
-	        placeHolder: _react.PropTypes.string,
+	        placeholder: _react.PropTypes.string,
 	        onChange: _react.PropTypes.func,
 	        onClick: _react.PropTypes.func,
 	        ItemElement: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string])
@@ -225,7 +225,6 @@
 	  _createClass(Search, [{
 	    key: 'changeInput',
 	    value: function changeInput(e) {
-	
 	      if (this.props.onChange !== undefined) {
 	        this.props.onChange(e);
 	      }
@@ -248,7 +247,6 @@
 	  }, {
 	    key: 'selectAutoComplete',
 	    value: function selectAutoComplete(e) {
-	
 	      if (this.props.onClick !== undefined) {
 	        this.props.onClick(e);
 	      }
@@ -271,7 +269,6 @@
 	
 	      if (this.props.keys !== undefined) {
 	        /* items for hash results */
-	
 	        items = this.state.matchingItems.map(function (item, i) {
 	          return _react2.default.createElement('li', { key: i, className: _this2.props.classPrefix + '__menu-item' }, _this2.props.keys.map(function (itemKey, j) {
 	            return _react2.default.createElement(ItemElement, { key: j, onClick: _this2.selectAutoComplete.bind(_this2) }, item[itemKey]);
@@ -279,7 +276,6 @@
 	        });
 	      } else {
 	        /* items for a simple array */
-	
 	        items = this.state.matchingItems.map(function (item, i) {
 	          return _react2.default.createElement('li', { key: i, className: _this2.props.classPrefix + '__menu-item' }, _react2.default.createElement(ItemElement, { onClick: _this2.selectAutoComplete.bind(_this2) }, item));
 	        });
@@ -288,7 +284,7 @@
 	      return _react2.default.createElement('div', { className: this.props.classPrefix }, _react2.default.createElement('input', {
 	        type: 'text',
 	        className: inputClassName,
-	        placeholder: this.props.placeHolder,
+	        placeholder: this.props.placeholder,
 	        ref: 'searchInput',
 	        onKeyUp: this.changeInput.bind(this) }), _react2.default.createElement('div', { className: menuClassName, ref: 'autocomplete' }, _react2.default.createElement('ul', { className: this.props.classPrefix + '__menu-items' }, items)));
 	    }
@@ -333,7 +329,6 @@
 	  var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ''), 'i');
 	
 	  return items.filter(function (item) {
-	
 	    if (reg.test(item[searchKey])) {
 	      return item;
 	    }

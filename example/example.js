@@ -24,7 +24,7 @@ class TestComponent extends Component {
             items={this.props.items}
             keys={this.props.keys}
             searchKey={this.props.searchKey}
-            placeHolder='Search for a programming language'
+            placeholder='Search for a programming language'
             onChange={this.myFunc} />
       </div>
     )
