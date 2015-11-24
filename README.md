@@ -5,7 +5,7 @@
 
 react-search is a simple search autocomplete component using react.js.
 
-## Installation
+## Install
 
 `npm install react-search --save`
 
