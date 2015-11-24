@@ -15,8 +15,8 @@ react-search is a simple search autocomplete component using react.js.
 
 ```jsx
 import Search from 'react-search'
-import ReactDOM from 'react-dom';
-import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
+import React, { Component } from 'react'
 
 let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'julia', 'c', 'scala','haskell']
 
@@ -27,8 +27,8 @@ ReactDOM.render(<Search items={ITEMS}/>, document.getElementById('root'));
 
 ```jsx
 import Search from 'react-search'
-import ReactDOM from 'react-dom';
-import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
+import React, { Component } from 'react'
 
 let ITEMS = [ 
 	{ title: 'javascript', description: 'an awesome language' },
@@ -50,11 +50,9 @@ ReactDOM.render(<Search 'Search for a programming language'
 
 ## Versions
 
-#### `1.0.2` 
-Uses React ^0.13.0
+#### `1.0.2` uses React `^0.13.0`
 
-#### `1.0.5` 
-Uses React ^0.14.0
+#### `1.0.5` uses React `^0.14.0`
 
 ## Props
 
