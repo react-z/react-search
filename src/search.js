@@ -63,7 +63,7 @@ class Search extends Component {
     }
 
     this.refs.autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--hidden`
-    let result = e.target.innerHTML
+    let result = e.currentTarget.children[0].innerHTML
     this.refs.searchInput.value = result
   }
 
@@ -78,11 +78,13 @@ class Search extends Component {
       /* items for hash results */
       items = this.state.matchingItems.map((item, i) => {
         return (
-          <li key={i} className={`${this.props.classPrefix}__menu-item`}>
+          <li key={i}
+              className={`${this.props.classPrefix}__menu-item`}
+              onClick={this.selectAutoComplete.bind(this)}>
             {
               this.props.keys.map((itemKey, j) => {
                 return (
-                  <ItemElement key={j} onClick={this.selectAutoComplete.bind(this)}>
+                  <ItemElement key={j}>
                   { item[itemKey] }
                   </ItemElement>
                 )
