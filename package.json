@@ -13,10 +13,6 @@
   "peerDependencies": {
     "react": "^0.14.0"
   },
-  "files": [
-    "lib",
-    "src"
-  ],
   "devDependencies": {
     "ava": "^0.3.0",
     "babel-core": "^6.0.20",
@@ -37,8 +33,6 @@
   "scripts": {
     "build": "babel src --out-dir lib",
     "example": "webpack --config ./example/webpack.config.js",
-    "prepublish": "npm run build",
-    "postinstall": "npm run build",
     "serve": "node ./example/server.js",
     "start": "npm run example && npm run serve",
     "style": "standard",
