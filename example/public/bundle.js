@@ -79,8 +79,9 @@
 	
 	  _createClass(TestComponent, [{
 	    key: 'myFunc',
-	    value: function myFunc(e) {
+	    value: function myFunc(e, results) {
 	      console.log(e.target.value);
+	      console.log(results);
 	      console.log('love coming in to this callback');
 	    }
 	  }, {
@@ -225,10 +226,6 @@
 	  _createClass(Search, [{
 	    key: 'changeInput',
 	    value: function changeInput(e) {
-	      if (this.props.onChange !== undefined) {
-	        this.props.onChange(e);
-	      }
-	
 	      this.refs.autocomplete.className = this.props.classPrefix + '__menu ' + this.props.classPrefix + '__menu--open';
 	      var searchValue = this.refs.searchInput.value;
 	
@@ -243,17 +240,26 @@
 	      }
 	
 	      this.setState({ matchingItems: result });
+	
+	      if (this.props.onChange !== undefined) {
+	        this.props.onChange(e, result);
+	      }
 	    }
 	  }, {
 	    key: 'selectAutoComplete',
 	    value: function selectAutoComplete(e) {
-	      if (this.props.onClick !== undefined) {
-	        this.props.onClick(e);
-	      }
-	
 	      this.refs.autocomplete.className = this.props.classPrefix + '__menu ' + this.props.classPrefix + '__menu--hidden';
-	      var result = e.target.innerHTML;
+	      var result = undefined;
+	      if (e.currentTarget.children.length) {
+	        result = e.currentTarget.children[0].innerHTML;
+	      } else {
+	        result = e.currentTarget.innerHTML;
+	      }
 	      this.refs.searchInput.value = result;
+	
+	      if (this.props.onClick !== undefined) {
+	        this.props.onClick(e, result);
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -270,8 +276,10 @@
 	      if (this.props.keys !== undefined) {
 	        /* items for hash results */
 	        items = this.state.matchingItems.map(function (item, i) {
-	          return _react2.default.createElement('li', { key: i, className: _this2.props.classPrefix + '__menu-item' }, _this2.props.keys.map(function (itemKey, j) {
-	            return _react2.default.createElement(ItemElement, { key: j, onClick: _this2.selectAutoComplete.bind(_this2) }, item[itemKey]);
+	          return _react2.default.createElement('li', { key: i,
+	            className: _this2.props.classPrefix + '__menu-item',
+	            onClick: _this2.selectAutoComplete.bind(_this2) }, _this2.props.keys.map(function (itemKey, j) {
+	            return _react2.default.createElement(ItemElement, { key: j }, item[itemKey]);
 	          }));
 	        });
 	      } else {
@@ -1352,7 +1360,7 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 	
-	var invariant = function (condition, format, a, b, c, d, e, f) {
+	function invariant(condition, format, a, b, c, d, e, f) {
 	  if (process.env.NODE_ENV !== 'production') {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
@@ -1366,15 +1374,16 @@
 	    } else {
 	      var args = [a, b, c, d, e, f];
 	      var argIndex = 0;
-	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
+	      error = new Error(format.replace(/%s/g, function () {
 	        return args[argIndex++];
 	      }));
+	      error.name = 'Invariant Violation';
 	    }
 	
 	    error.framesToPop = 1; // we don't care about invariant's own frame
 	    throw error;
 	  }
-	};
+	}
 	
 	module.exports = invariant;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
@@ -10801,8 +10810,8 @@
 	     */
 	    // autoCapitalize and autoCorrect are supported in Mobile Safari for
 	    // keyboard hints.
-	    autoCapitalize: null,
-	    autoCorrect: null,
+	    autoCapitalize: MUST_USE_ATTRIBUTE,
+	    autoCorrect: MUST_USE_ATTRIBUTE,
 	    // autoSave allows WebKit/Blink to persist values of input fields on page reloads
 	    autoSave: null,
 	    // color is for Safari mask-icon link
@@ -10833,9 +10842,7 @@
 	    httpEquiv: 'http-equiv'
 	  },
 	  DOMPropertyNames: {
-	    autoCapitalize: 'autocapitalize',
 	    autoComplete: 'autocomplete',
-	    autoCorrect: 'autocorrect',
 	    autoFocus: 'autofocus',
 	    autoPlay: 'autoplay',
 	    autoSave: 'autosave',
@@ -13914,7 +13921,7 @@
 	    var value = LinkedValueUtils.getValue(props);
 	
 	    if (value != null) {
-	      updateOptions(this, props, value);
+	      updateOptions(this, Boolean(props.multiple), value);
 	    }
 	  }
 	}
@@ -16953,15 +16960,11 @@
 	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
 	 * not safe to call document.activeElement if there is nothing focused.
 	 *
-	 * The activeElement will be null only if the document or document body is not yet defined.
+	 * The activeElement will be null only if the document body is not yet defined.
 	 */
-	'use strict';
+	"use strict";
 	
 	function getActiveElement() /*?DOMElement*/{
-	  if (typeof document === 'undefined') {
-	    return null;
-	  }
-	
 	  try {
 	    return document.activeElement || document.body;
 	  } catch (e) {
@@ -18701,7 +18704,9 @@
 	  'setValueForProperty': 'update attribute',
 	  'setValueForAttribute': 'update attribute',
 	  'deleteValueForProperty': 'remove attribute',
-	  'dangerouslyReplaceNodeWithMarkupByID': 'replace'
+	  'setValueForStyles': 'update styles',
+	  'replaceNodeWithMarkup': 'replace',
+	  'updateTextContent': 'set textContent'
 	};
 	
 	function getTotalTime(measurements) {
@@ -18893,18 +18898,23 @@
 	'use strict';
 	
 	var performance = __webpack_require__(148);
-	var curPerformance = performance;
+	
+	var performanceNow;
 	
 	/**
 	 * Detect if we can use `window.performance.now()` and gracefully fallback to
 	 * `Date.now()` if it doesn't exist. We need to support Firefox < 15 for now
 	 * because of Facebook's testing infrastructure.
 	 */
-	if (!curPerformance || !curPerformance.now) {
-	  curPerformance = Date;
+	if (performance.now) {
+	  performanceNow = function () {
+	    return performance.now();
+	  };
+	} else {
+	  performanceNow = function () {
+	    return Date.now();
+	  };
 	}
-	
-	var performanceNow = curPerformance.now.bind(curPerformance);
 	
 	module.exports = performanceNow;
 
@@ -18953,7 +18963,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.3';
+	module.exports = '0.14.5';
 
 /***/ },
 /* 150 */

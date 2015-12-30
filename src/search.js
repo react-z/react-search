@@ -37,10 +37,6 @@ class Search extends Component {
   }
 
   changeInput (e) {
-    if (this.props.onChange !== undefined) {
-      this.props.onChange(e)
-    }
-
     this.refs.autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--open`
     let searchValue = this.refs.searchInput.value
 
@@ -55,16 +51,25 @@ class Search extends Component {
     }
 
     this.setState({matchingItems: result})
+
+    if (this.props.onChange !== undefined) {
+      this.props.onChange(e, result)
+    }
   }
 
   selectAutoComplete (e) {
-    if (this.props.onClick !== undefined) {
-      this.props.onClick(e)
-    }
-
     this.refs.autocomplete.className = `${this.props.classPrefix}__menu ${this.props.classPrefix}__menu--hidden`
-    let result = e.currentTarget.children[0].innerHTML
+    let result
+    if (e.currentTarget.children.length) {
+      result = e.currentTarget.children[0].innerHTML
+    } else {
+      result = e.currentTarget.innerHTML
+    }
     this.refs.searchInput.value = result
+
+    if (this.props.onClick !== undefined) {
+      this.props.onClick(e, result)
+    }
   }
 
   render () {

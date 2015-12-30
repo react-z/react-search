@@ -4,8 +4,9 @@ import React, { Component, PropTypes } from 'react'
 
 class TestComponent extends Component {
 
-  myFunc (e) {
+  myFunc (e, results) {
     console.log(e.target.value)
+    console.log(results)
     console.log('love coming in to this callback')
   }
 
