@@ -6,7 +6,7 @@ import SearchItemInArray from './SearchItemInArray'
 import SearchItemInArrayObjects from './SearchItemInArrayObjects'
 import React, { Component, PropTypes } from 'react'
 
-class Search extends Component {
+export default class Search extends Component {
 
   static get defaultProps () {
     return {
@@ -127,5 +127,3 @@ class Search extends Component {
     )
   }
 }
-
-module.exports = Search

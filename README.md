@@ -30,63 +30,63 @@ import Search from 'react-search'
 import ReactDOM from 'react-dom'
 import React, { Component } from 'react'
 
-let ITEMS = [ 
+let ITEMS = [
 	{ title: 'javascript', description: 'an awesome language' },
 	{ title: 'ruby', description: 'a cool language' },
 	{ title: 'haskell', description: 'a functional language' }
 ]
 
 let KEYS = ['title', 'description']
-
 let KEY = 'title' /* search by title */
 
-ReactDOM.render(<Search 'Search for a programming language' 
-						items={ITEMS} 
-						keys={KEYS} 
-						searchKey={KEY} />, 
-				document.getElementById('root')
-				);
+ReactDOM.render(
+  <Search 'Search for a programming language' items={ITEMS} keys={KEYS} searchKey={KEY} />,
+	document.getElementById('root')
+)
 ```
 
 ## Versions
 
 #### `1.0.2` uses React `^0.13.0`
 
-#### `1.0.5` uses React `^0.14.0`
+#### `1.0.9` uses React `^0.14.0`
+
+#### `1.0.10` uses React `^15.1`
 
 ## Props
 
 #### `items` (required)
 List of Items to filter through, either an array of strings or objects.
 
-#### `keys`
+#### `keys` (optional)
 Keys to display, if using an array of objects.
 
-#### `searchKey`
+#### `searchKey` (optional)
 The search key to match when searhching, if using an array of objects.
 
-#### `classPrefix`
+#### `classPrefix` (optional)
 default: `react-search`
 Optional class prefix for included class names. Will be attached to the main wrapper element.
 
-#### `placeholder`
+#### `placeholder` (optional)
 placeholder attribute for the text input
 
-#### `onChange`
+#### `onChange` (optional)
 Update handler for the text input. Fired before the internal logic to update the autocomplete list. Callback value passed back is the SyntheticKeyboardEvent, which you can use to get the target or value.
 
-#### `onClick`
+#### `onClick` (optional)
 Click handler for each item in the autocomplete list. Fired before the internal logic to hide the autocomplete list. Callback value passed back is the SyntheticKeyboardEvent, which you can use to get the target or value.
 
-#### `ItemElement`
+#### `ItemElement` (optional)
 default: `'a'`
 Custom element to use for each `<li>` in the autocomplete list. Can be a React Element or a valid DOM tag as a string, such as `<CustomElement>` or `'div'`
 
 ## Styles
 
-react-search can be used with your own custom styles. A minimal search.css style sheet is included in the example as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
+react-search can be used with your own custom styles. A minimal [search.css](https://github.com/StevenIseki/react-search/blob/master/example/public/search.css) style sheet is included as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
 
 ## Development
+
     npm install
     npm run build
     npm test
