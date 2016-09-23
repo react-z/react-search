@@ -1,7 +1,7 @@
 {
   "name": "react-search",
   "version": "1.0.10",
-  "description": "a simple search component",
+  "description": "a simple Search Autocomplete component",
   "main": "lib/Search.js",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "author": "Steven Iseki <stevenisekimartin@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^15.1.0"
+    "react": "^15.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
@@ -24,7 +24,7 @@
     "expect": "^1.20.1",
     "express": "^4.13.4",
     "jsdom": "^9.2.1",
-    "react": "^15.1.0",
+    "react": "^15.3.1",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
     "tape": "^4.5.1",

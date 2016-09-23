@@ -12,18 +12,31 @@ test('Search component', (t) => {
     console.log('just changed...')
   }
 
-  let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala', 'haskell']
-
+  let items = [
+    { id: 0, value: 'ruby' },
+    { id: 1, value: 'javascript' },
+    { id: 2, value: 'lua' },
+    { id: 3, value: 'go' },
+    { id: 4, value: 'julia' }
+  ]
   const wrapper = mount(
-    <Search items={ITEMS} placeholder='Search for a programming language' onChange={changed} />
+    <Search items={items}
+            placeholder='Pick your language'
+            max_selected={3}
+            multiple={true}
+            onItemsChanged={changed} />
   )
 
   t.pass(
-    expect(wrapper.props().items).toEqual(ITEMS)
+    expect(wrapper.props().items).toEqual(items)
   )
 
   t.pass(
-    expect(wrapper.props().onChange).toEqual(changed)
+    expect(wrapper.props().max_selected).toEqual(3)
+  )
+
+  t.pass(
+    expect(wrapper.props().onItemsChanged).toEqual(changed)
   )
 
   t.end()
