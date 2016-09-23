@@ -1,9 +1,10 @@
 # react-search
 
 [![npm version](https://badge.fury.io/js/react-search.svg)](https://badge.fury.io/js/react-search)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-react-search is a simple search autocomplete component using react
+![](https://raw.githubusercontent.com/StevenIseki/react-search/master/example/screenshot.gif)
+
+react-search is a simple Autocomplete Search component
 
 ## Install
 
@@ -11,79 +12,63 @@ react-search is a simple search autocomplete component using react
 
 ## Usage
 
-**items as an array**
-
 ```jsx
 import Search from 'react-search'
 import ReactDOM from 'react-dom'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
-let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'julia', 'c', 'scala','haskell']
+class TestComponent extends Component {
 
-ReactDOM.render(<Search items={ITEMS}/>, document.getElementById('root'));
+  HiItems(items) {
+    console.log(items)
+  }
+
+  render () {
+    let items = [
+      { id: 0, value: 'ruby' },
+      { id: 1, value: 'javascript' },
+      { id: 2, value: 'lua' },
+      { id: 3, value: 'go' },
+      { id: 4, value: 'julia' }
+    ]
+
+    return (
+      <div>
+        <Search items={items} />
+
+        <Search items={items}
+                placeholder='Pick your language'
+                max_selected={3}
+                multiple={true}
+                onItemsChanged={this.HiItems.bind(this)} />
+      </div>
+    )
+  }
+}
+
+ReactDOM.render( <TestComponent />, document.getElementById('root'))
 ```
-
-**items as an array of objects**
-
-```jsx
-import Search from 'react-search'
-import ReactDOM from 'react-dom'
-import React, { Component } from 'react'
-
-let ITEMS = [
-	{ title: 'javascript', description: 'an awesome language' },
-	{ title: 'ruby', description: 'a cool language' },
-	{ title: 'haskell', description: 'a functional language' }
-]
-
-let KEYS = ['title', 'description']
-let KEY = 'title' /* search by title */
-
-ReactDOM.render(
-  <Search 'Search for a programming language' items={ITEMS} keys={KEYS} searchKey={KEY} />,
-	document.getElementById('root')
-)
-```
-
-## Versions
-
-#### `1.0.2` uses React `^0.13.0`
-
-#### `1.0.9` uses React `^0.14.0`
-
-#### `1.0.10` uses React `^15.1`
 
 ## Props
 
 #### `items` (required)
-List of Items to filter through, either an array of strings or objects.
+List of Items to filter through, an array of items with `value` and `id`, and any other props. value is displayed. ` let items = [{ id: 0, value: 'ruby' }, { id: 1, value: 'lua' }`
 
-#### `keys` (optional)
-Keys to display, if using an array of objects.
+#### `multiple` (optional)
+Defaults to false, set as true if you want multiple items in the list, false for a single selection dropdown.
 
-#### `searchKey` (optional)
-The search key to match when searhching, if using an array of objects.
-
-#### `classPrefix` (optional)
-default: `react-search`
-Optional class prefix for included class names. Will be attached to the main wrapper element.
+#### `max_selected` (optional)
+Defaults to 100, a maximum number of items allowed to be selected
 
 #### `placeholder` (optional)
-placeholder attribute for the text input
+placeholder for the input
 
-#### `onChange` (optional)
-Update handler for the text input. Fired before the internal logic to update the autocomplete list. Callback value passed back is the SyntheticKeyboardEvent, which you can use to get the target or value.
-
-#### `onClick` (optional)
-Click handler for each item in the autocomplete list. Fired before the internal logic to hide the autocomplete list. Callback value passed back is the SyntheticKeyboardEvent, which you can use to get the target or value.
-
-#### `ItemElement` (optional)
-default: `'a'`
-Custom element to use for each `<li>` in the autocomplete list. Can be a React Element or a valid DOM tag as a string, such as `<CustomElement>` or `'div'`
+#### `onItemsChanged` (optional)
+Handler returns the items from the Search autocomplete component when items are added or removed from the list.
 
 ## Styles
 
-react-search can be used with your own custom styles. A minimal [search.css](https://github.com/StevenIseki/react-search/blob/master/example/public/search.css) style sheet is included as a guide. The styles follow [BEM](https://en.bem.info/method/) naming conventions.
+react-search can be used with your own custom styles. A minimal [react-search.css](https://github.com/StevenIseki/react-search/blob/master/example/lib/react-search.css) style sheet is included.
 
 ## Development
 

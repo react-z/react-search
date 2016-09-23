@@ -1,47 +1,34 @@
-import Search from '../lib/search'
+import Search from '../lib/Search' /* react-search */
 import ReactDOM from 'react-dom'
 import React, { Component, PropTypes } from 'react'
 
-class SearchTestComponent extends Component {
+class TestComponent extends Component {
 
-  myFunc (e, results) {
-    console.log(e.target.value)
-    console.log(results)
+  HiItems(items) {
+    console.log(items)
   }
 
   render () {
-    let ITEMS = ['ruby', 'javascript', 'lua', 'go', 'c++', 'julia', 'java', 'c', 'scala', 'haskell']
-
-    return (
-      <div>
-        <Search items={ITEMS} placeholder='Search for a programming language' onChange={this.myFunc.bind(this)} />
-      </div>
-    )
-  }
-}
-
-class SearchTestArrayComponent extends Component {
-
-  render () {
-    let ITEMS = [
-      { title: 'javascript', description: 'an awesome language' },
-      { title: 'ruby', description: 'a cool language' },
-      { title: 'haskell', description: 'a functional language' }
+    let items = [
+      { id: 0, value: 'ruby' },
+      { id: 1, value: 'javascript' },
+      { id: 2, value: 'lua' },
+      { id: 3, value: 'go' },
+      { id: 4, value: 'julia' }
     ]
-    let KEYS = ['title', 'description']
-    let KEY = 'title'
 
     return (
       <div>
-        <Search items={ITEMS} keys={KEYS} searchKey={KEY} placeholder='Search for a programming language' />
+        <Search items={items} />
+
+        <Search items={items}
+                placeholder='Pick your language'
+                max_selected={3}
+                multiple={true}
+                onItemsChanged={this.HiItems.bind(this)} />
       </div>
     )
   }
 }
 
-ReactDOM.render(
-  <div>
-    <SearchTestComponent />
-    <SearchTestArrayComponent />
-  </div>
-  , document.getElementById('root'))
+ReactDOM.render( <TestComponent />, document.getElementById('root'))
