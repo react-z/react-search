@@ -68,7 +68,7 @@ Handler returns the items from the Search autocomplete component when items are 
 
 ## Styles
 
-react-search can be used with your own custom styles. A minimal [react-search.css](https://github.com/StevenIseki/react-search/blob/master/example/lib/react-search.css) style sheet is included.
+react-search can be used with your own custom styles. A minimal [react-search.css](https://github.com/StevenIseki/react-search/blob/master/lib/react-search.css) style sheet is included.
 
 ## Development
 
