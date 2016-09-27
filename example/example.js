@@ -8,6 +8,26 @@ class TestComponent extends Component {
     console.log(items)
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      repos: []
+    }
+  }
+
+  getItemsAsync(searchValue, cb) {
+    let url = `https://api.github.com/search/repositories?q=${searchValue}&language=javascript&sort=stars&order=desc`
+    fetch(url).then( (response) => {
+      return response.json();
+    }).then((results) => {
+      if(results.items != undefined){
+        let items = results.items.map( (res, i) => { return { id: i, value: res.full_name } })
+        this.setState({ repos: items })
+        cb(searchValue)
+      }
+    });
+  }
+
   render () {
     let items = [
       { id: 0, value: 'ruby' },
@@ -25,6 +45,11 @@ class TestComponent extends Component {
                 placeholder='Pick your language'
                 max_selected={3}
                 multiple={true}
+                onItemsChanged={this.HiItems.bind(this)} />
+
+        <Search items={this.state.repos}
+                multiple={true}
+                getItemsAsync={this.getItemsAsync.bind(this)}
                 onItemsChanged={this.HiItems.bind(this)} />
       </div>
     )

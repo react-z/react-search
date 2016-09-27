@@ -72,16 +72,41 @@
 	var TestComponent = function (_Component) {
 	  _inherits(TestComponent, _Component);
 
-	  function TestComponent() {
-	    _classCallCheck(this, TestComponent);
-
-	    return _possibleConstructorReturn(this, (TestComponent.__proto__ || Object.getPrototypeOf(TestComponent)).apply(this, arguments));
-	  }
-
 	  _createClass(TestComponent, [{
 	    key: 'HiItems',
 	    value: function HiItems(items) {
 	      console.log(items);
+	    }
+	  }]);
+
+	  function TestComponent(props) {
+	    _classCallCheck(this, TestComponent);
+
+	    var _this = _possibleConstructorReturn(this, (TestComponent.__proto__ || Object.getPrototypeOf(TestComponent)).call(this, props));
+
+	    _this.state = {
+	      repos: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(TestComponent, [{
+	    key: 'getItemsAsync',
+	    value: function getItemsAsync(searchValue, cb) {
+	      var _this2 = this;
+
+	      var url = 'https://api.github.com/search/repositories?q=' + searchValue + '&language=javascript&sort=stars&order=desc';
+	      fetch(url).then(function (response) {
+	        return response.json();
+	      }).then(function (results) {
+	        if (results.items != undefined) {
+	          var items = results.items.map(function (res, i) {
+	            return { id: i, value: res.full_name };
+	          });
+	          _this2.setState({ repos: items });
+	          cb(searchValue);
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -96,6 +121,10 @@
 	          placeholder: 'Pick your language',
 	          max_selected: 3,
 	          multiple: true,
+	          onItemsChanged: this.HiItems.bind(this) }),
+	        _react2.default.createElement(_Search2.default, { items: this.state.repos,
+	          multiple: true,
+	          getItemsAsync: this.getItemsAsync.bind(this),
 	          onItemsChanged: this.HiItems.bind(this) })
 	      );
 	    }
@@ -178,7 +207,9 @@
 	        onItemsChanged: _react2.default.PropTypes.func,
 	        placeholder: _react2.default.PropTypes.string.isRequired,
 	        max_selected: _react2.default.PropTypes.number,
-	        multiple: _react2.default.PropTypes.bool
+	        multiple: _react2.default.PropTypes.bool,
+	        onKeyChange: _react2.default.PropTypes.func,
+	        getItemsAsync: _react2.default.PropTypes.func
 	      };
 	    }
 	  }]);
@@ -245,48 +276,66 @@
 	      }
 	    }
 	  }, {
-	    key: 'setSelected',
-	    value: function setSelected(selected) {
+	    key: 'triggerKeyChange',
+	    value: function triggerKeyChange(searchValue) {
+	      if (this.props.onKeyChange !== undefined) {
+	        this.props.onKeyChange(searchValue);
+	      }
+	    }
+	  }, {
+	    key: 'triggerGetItemsAsync',
+	    value: function triggerGetItemsAsync(searchValue) {
 	      var _this2 = this;
 
+	      if (this.props.getItemsAsync !== undefined) {
+	        this.props.getItemsAsync(searchValue, function () {
+	          _this2.updateSearchValue(searchValue);
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'setSelected',
+	    value: function setSelected(selected) {
+	      var _this3 = this;
+
 	      this.setState({ selectedItems: selected }, function () {
-	        _this2.triggerItemsChanged();
+	        _this3.triggerItemsChanged();
 	      });
 	    }
 	  }, {
 	    key: 'addSelected',
 	    value: function addSelected(selected) {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      var items = this.state.selectedItems;
 	      items.push(selected);
 	      this.setState({ selectedItems: items }, function () {
-	        _this3.triggerItemsChanged();
+	        _this4.triggerItemsChanged();
 	      });
 	    }
 	  }, {
 	    key: 'removeSelected',
 	    value: function removeSelected(itemId) {
-	      var _this4 = this;
+	      var _this5 = this;
 
 	      var items = this.state.selectedItems;
 	      var itemsUpdated = items.filter(function (i) {
 	        return i.id != itemId;
 	      });
 	      this.setState({ selectedItems: itemsUpdated }, function () {
-	        _this4.triggerItemsChanged();
+	        _this5.triggerItemsChanged();
 	      });
 	    }
 	  }, {
 	    key: 'updateSearchValue',
 	    value: function updateSearchValue(value) {
-	      var _this5 = this;
+	      var _this6 = this;
 
 	      var items = this.props.items;
 
 	      this.setState({ searchValue: value }, function () {
-	        var menuItems = _this5.SearchItemInArrayObjects(items, _this5.state.searchValue, 'value');
-	        _this5.setMenuItems(menuItems);
+	        var menuItems = _this6.SearchItemInArrayObjects(items, _this6.state.searchValue, 'value');
+	        _this6.setMenuItems(menuItems);
 	      });
 	    }
 	  }, {
@@ -321,13 +370,13 @@
 	  }, {
 	    key: 'focusInput',
 	    value: function focusInput() {
-	      var _this6 = this;
+	      var _this7 = this;
 
 	      this.showAllMenuItems();
 	      this.refs.searchInput.placeholder = '';
 	      this.refs.searchInput.value = '';
 	      this.blurTimeout = setTimeout(function () {
-	        _this6.refs.searchInput.focus();
+	        _this7.refs.searchInput.focus();
 	      }, 100);
 	    }
 	  }, {
@@ -367,12 +416,19 @@
 	  }, {
 	    key: 'handleKeyChange',
 	    value: function handleKeyChange(e) {
-	      this.updateSearchValue(this.refs.searchInput.value);
+	      var getItemsAsync = this.props.getItemsAsync;
+
+	      this.triggerKeyChange(this.refs.searchInput.value);
+	      if (getItemsAsync != undefined) {
+	        this.triggerGetItemsAsync(this.refs.searchInput.value);
+	      } else {
+	        this.updateSearchValue(this.refs.searchInput.value);
+	      }
 	    }
 	  }, {
 	    key: 'renderMenuItems',
 	    value: function renderMenuItems() {
-	      var _this7 = this;
+	      var _this8 = this;
 
 	      var _state = this.state;
 	      var menuItems = _state.menuItems;
@@ -384,10 +440,10 @@
 	      if (!menuItems.length) return null;
 
 	      var items = menuItems.map(function (item, i) {
-	        if (_this7.itemSelected(item.id)) {
+	        if (_this8.itemSelected(item.id)) {
 	          return _react2.default.createElement('li', { key: i, className: 'autocomplete__item autocomplete__item--disabled' }, _react2.default.createElement('span', { key: i, 'data-id': item.id, dangerouslySetInnerHTML: { __html: item.value } }));
 	        } else {
-	          return _react2.default.createElement('li', { key: i, className: 'autocomplete__item', onClick: _this7.handleSelect.bind(_this7) }, _react2.default.createElement('span', { key: i, 'data-id': item.id, dangerouslySetInnerHTML: { __html: item.value } }));
+	          return _react2.default.createElement('li', { key: i, className: 'autocomplete__item', onClick: _this8.handleSelect.bind(_this8) }, _react2.default.createElement('span', { key: i, 'data-id': item.id, dangerouslySetInnerHTML: { __html: item.value } }));
 	        }
 	      });
 	      return items;
@@ -395,7 +451,7 @@
 	  }, {
 	    key: 'renderSelectedItems',
 	    value: function renderSelectedItems() {
-	      var _this8 = this;
+	      var _this9 = this;
 
 	      var selectedItems = this.state.selectedItems;
 	      var _props2 = this.props;
@@ -414,12 +470,12 @@
 	        var itemClass = 'autocomplete__item autocomplete__item--selected autocomplete__item__dropdown';
 	        if (multiple) {
 	          icon = _react2.default.createElement('span', { 'data-id': item.id, className: 'autocomplete__close',
-	            onClick: _this8.handleRemove.bind(_this8) });
+	            onClick: _this9.handleRemove.bind(_this9) });
 	          itemClass = 'autocomplete__item autocomplete__item--selected';
 	        }
 
 	        return _react2.default.createElement('li', { key: i, className: itemClass,
-	          onClick: _this8.handleItemClick.bind(_this8) }, _react2.default.createElement('span', { 'data-id': item.id, dangerouslySetInnerHTML: { __html: item.value } }), icon);
+	          onClick: _this9.handleItemClick.bind(_this9) }, _react2.default.createElement('span', { 'data-id': item.id, dangerouslySetInnerHTML: { __html: item.value } }), icon);
 	      });
 	      return items;
 	    }

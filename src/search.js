@@ -22,9 +22,11 @@ export default class Search extends Component {
         React.PropTypes.arrayOf(React.PropTypes.object)
       ]),
       onItemsChanged: React.PropTypes.func,
-      placeholder: React.PropTypes.string.isRequired,
+      placeholder: React.PropTypes.string,
       max_selected: React.PropTypes.number,
-      multiple: React.PropTypes.bool
+      multiple: React.PropTypes.bool,
+      onKeyChange: React.PropTypes.func,
+      getItemsAsync: React.PropTypes.func
     }
   }
 
@@ -74,6 +76,20 @@ export default class Search extends Component {
   triggerItemsChanged() {
     if (this.props.onItemsChanged !== undefined) {
       this.props.onItemsChanged(this.state.selectedItems)
+    }
+  }
+
+  triggerKeyChange(searchValue) {
+    if (this.props.onKeyChange !== undefined) {
+      this.props.onKeyChange(searchValue)
+    }
+  }
+
+  triggerGetItemsAsync(searchValue) {
+    if (this.props.getItemsAsync !== undefined) {
+      this.props.getItemsAsync(searchValue, () => {
+        this.updateSearchValue(searchValue)
+      })
     }
   }
 
@@ -171,7 +187,13 @@ export default class Search extends Component {
   }
 
   handleKeyChange (e) {
-    this.updateSearchValue(this.refs.searchInput.value)
+    const { getItemsAsync } = this.props;
+    this.triggerKeyChange(this.refs.searchInput.value)
+    if( getItemsAsync != undefined ) {
+      this.triggerGetItemsAsync(this.refs.searchInput.value)
+    } else {
+      this.updateSearchValue(this.refs.searchInput.value)
+    }
   }
 
   renderMenuItems() {

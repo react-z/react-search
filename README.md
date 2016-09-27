@@ -10,7 +10,9 @@ react-search is a simple Autocomplete Search component
 
 `npm install react-search --save`
 
-## Usage
+## Usage basic
+
+The basic use is shown below, pass in your `items` as a prop to react-search. The items must be an array of objects with `value` and `id`, and any other props you may need will not be displayed. Check out the [example](https://github.com/StevenIseki/react-search/blob/master/example) for more info.
 
 ```jsx
 import Search from 'react-search'
@@ -49,6 +51,51 @@ class TestComponent extends Component {
 ReactDOM.render( <TestComponent />, document.getElementById('root'))
 ```
 
+## Usage async
+
+To load items async before running the search to filter results you can pass a function to the `getItemsAsync` prop which will be triggered to load the results each key change. An example below using the github api to search for repos. Check out the [example](https://github.com/StevenIseki/react-search/blob/master/example) for more info.
+
+```jsx
+import Search from 'react-search'
+import ReactDOM from 'react-dom'
+import React, { Component, PropTypes } from 'react'
+
+class TestComponent extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = { repos: [] }
+  }
+
+  getItemsAsync(searchValue, cb) {
+    let url = `https://api.github.com/search/repositories?q=${searchValue}&language=javascript`
+    fetch(url).then( (response) => {
+      return response.json();
+    }).then((results) => {
+      if(results.items != undefined){
+        let items = results.items.map( (res, i) => { return { id: i, value: res.full_name } })
+        this.setState({ repos: items })
+        cb(searchValue)
+      }
+    });
+  }
+
+  render () {
+    return (
+      <div>
+        <Search items={this.state.repos}
+                multiple={true}
+                getItemsAsync={this.getItemsAsync.bind(this)}
+                onItemsChanged={this.HiItems.bind(this)} />
+      </div>
+    )
+  }
+}
+
+ReactDOM.render( <TestComponent />, document.getElementById('root'))
+
+```
+
 ## Props
 
 #### `items` (required)
@@ -65,6 +112,13 @@ placeholder for the input
 
 #### `onItemsChanged` (optional)
 Handler returns the items from the Search autocomplete component when items are added or removed from the list.
+
+#### `onKeyChange` (optional)
+Handler returns the search value on key change.
+
+#### `getItemsAsync` (optional)
+A function to load items async before running the autocomplete filter.
+
 
 ## Styles
 
