@@ -12,7 +12,7 @@ react-search is a simple Autocomplete Search component
 
 ## Usage basic
 
-The basic use is shown below, pass in your `items` as a prop to react-search. The items must be an array of objects with `value` and `id`, and any other props you may need will not be displayed. Check out the [example](https://github.com/StevenIseki/react-search/blob/master/example) for more info.
+Pass in your `items` as a prop to react-search. The items must be an array of objects with `value` and `id`, and any other props you may need, which will not be displayed. Check out the [example](https://github.com/StevenIseki/react-search/blob/master/example) for more info.
 
 ```jsx
 import Search from 'react-search'
