@@ -119,7 +119,7 @@
 	        _react2.default.createElement(_Search2.default, { items: items }),
 	        _react2.default.createElement(_Search2.default, { items: items,
 	          placeholder: 'Pick your language',
-	          max_selected: 3,
+	          maxSelected: 3,
 	          multiple: true,
 	          onItemsChanged: this.HiItems.bind(this) }),
 	        _react2.default.createElement(_Search2.default, { items: this.state.repos,
@@ -194,7 +194,8 @@
 	      return {
 	        initialSelected: [],
 	        placeholder: '— None',
-	        max_selected: 100,
+	        NotFoundPlaceholder: 'Please search for some items...',
+	        maxSelected: 100,
 	        multiple: false
 	      };
 	    }
@@ -205,8 +206,9 @@
 	        items: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.object).isRequired,
 	        initialSelected: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.object, _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.object)]),
 	        onItemsChanged: _react2.default.PropTypes.func,
-	        placeholder: _react2.default.PropTypes.string.isRequired,
-	        max_selected: _react2.default.PropTypes.number,
+	        placeholder: _react2.default.PropTypes.string,
+	        NotFoundPlaceholder: _react2.default.PropTypes.string,
+	        maxSelected: _react2.default.PropTypes.number,
 	        multiple: _react2.default.PropTypes.bool,
 	        onKeyChange: _react2.default.PropTypes.func,
 	        getItemsAsync: _react2.default.PropTypes.func
@@ -350,8 +352,10 @@
 	  }, {
 	    key: 'setMenuItems',
 	    value: function setMenuItems(items) {
+	      var getItemsAsync = this.props.getItemsAsync;
+
 	      this.setState({ menuItems: items });
-	      if (items.length) {
+	      if (items.length || getItemsAsync != undefined) {
 	        this.showMenu();
 	      } else {
 	        this.hideMenu();
@@ -426,6 +430,11 @@
 	      }
 	    }
 	  }, {
+	    key: 'renderLoader',
+	    value: function renderLoader() {
+	      return _react2.default.createElement('div', { className: 'spinner' }, _react2.default.createElement('i', { className: 'fa fa-spinner fa-spin' }));
+	    }
+	  }, {
 	    key: 'renderMenuItems',
 	    value: function renderMenuItems() {
 	      var _this8 = this;
@@ -433,11 +442,11 @@
 	      var _state = this.state;
 	      var menuItems = _state.menuItems;
 	      var selectedItems = _state.selectedItems;
-	      var _props = this.props;
-	      var keys = _props.keys;
-	      var searchKey = _props.searchKey;
+	      var NotFoundPlaceholder = this.props.NotFoundPlaceholder;
 
-	      if (!menuItems.length) return null;
+	      if (!menuItems.length) {
+	        return _react2.default.createElement('li', { className: 'autocomplete__item autocomplete__item--disabled' }, _react2.default.createElement('span', { 'data-id': 0 }, NotFoundPlaceholder));
+	      }
 
 	      var items = menuItems.map(function (item, i) {
 	        if (_this8.itemSelected(item.id)) {
@@ -454,9 +463,9 @@
 	      var _this9 = this;
 
 	      var selectedItems = this.state.selectedItems;
-	      var _props2 = this.props;
-	      var multiple = _props2.multiple;
-	      var placeholder = _props2.placeholder;
+	      var _props = this.props;
+	      var multiple = _props.multiple;
+	      var placeholder = _props.placeholder;
 
 	      if (!selectedItems.length && multiple) return;
 
@@ -466,24 +475,35 @@
 	      }
 
 	      var items = selectedItems.map(function (item, i) {
-	        var icon = _react2.default.createElement('span', { className: 'autocomplete__dropdown' });
 	        var itemClass = 'autocomplete__item autocomplete__item--selected autocomplete__item__dropdown';
+	        var dropDown = _react2.default.createElement('span', { className: 'autocomplete__dropdown' });
+	        var icon = _react2.default.createElement('span', { 'data-id': item.id, className: 'autocomplete__close',
+	          onClick: _this9.handleRemove.bind(_this9) });
+
 	        if (multiple) {
-	          icon = _react2.default.createElement('span', { 'data-id': item.id, className: 'autocomplete__close',
-	            onClick: _this9.handleRemove.bind(_this9) });
+	          dropDown = null;
 	          itemClass = 'autocomplete__item autocomplete__item--selected';
 	        }
 
-	        return _react2.default.createElement('li', { key: i, className: itemClass,
-	          onClick: _this9.handleItemClick.bind(_this9) }, _react2.default.createElement('span', { 'data-id': item.id, dangerouslySetInnerHTML: { __html: item.value } }), icon);
+	        return _react2.default.createElement('li', { key: i, className: itemClass, onClick: _this9.handleItemClick.bind(_this9) }, _react2.default.createElement('span', { 'data-id': item.id, dangerouslySetInnerHTML: { __html: item.value } }), icon, dropDown);
 	      });
 	      return items;
 	    }
 	  }, {
 	    key: 'renderInput',
 	    value: function renderInput() {
+	      var _props2 = this.props;
+	      var maxSelected = _props2.maxSelected;
+	      var multiple = _props2.multiple;
+	      var selectedItems = this.state.selectedItems;
+
+	      var inputClass = 'autocomplete__input';
+	      if (multiple && selectedItems.length >= maxSelected) {
+	        inputClass = 'autocomplete__input autocomplete__input--hidden';
+	      }
+
 	      return _react2.default.createElement('input', { type: 'text',
-	        className: 'autocomplete__input',
+	        className: inputClass,
 	        ref: 'searchInput',
 	        placeholder: this.props.placeholder,
 	        onClick: this.handleClick.bind(this),
@@ -494,7 +514,7 @@
 	    key: 'getMenuClass',
 	    value: function getMenuClass() {
 	      var _props3 = this.props;
-	      var max_selected = _props3.max_selected;
+	      var maxSelected = _props3.maxSelected;
 	      var multiple = _props3.multiple;
 	      var _state2 = this.state;
 	      var menuVisible = _state2.menuVisible;
@@ -504,7 +524,7 @@
 	      if (menuVisible && !multiple) {
 	        menuClass = 'autocomplete__menu';
 	      }
-	      if (menuVisible && selectedItems.length < max_selected) {
+	      if (menuVisible && selectedItems.length < maxSelected) {
 	        menuClass = 'autocomplete__menu';
 	      }
 	      return menuClass;

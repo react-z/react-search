@@ -43,7 +43,7 @@ class TestComponent extends Component {
 
         <Search items={items}
                 placeholder='Pick your language'
-                max_selected={3}
+                maxSelected={3}
                 multiple={true}
                 onItemsChanged={this.HiItems.bind(this)} />
 

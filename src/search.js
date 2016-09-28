@@ -9,7 +9,8 @@ export default class Search extends Component {
     return {
       initialSelected: [],
       placeholder: '— None',
-      max_selected: 100,
+      NotFoundPlaceholder: 'Please search for some items...',
+      maxSelected: 100,
       multiple: false
     }
   }
@@ -23,7 +24,8 @@ export default class Search extends Component {
       ]),
       onItemsChanged: React.PropTypes.func,
       placeholder: React.PropTypes.string,
-      max_selected: React.PropTypes.number,
+      NotFoundPlaceholder: React.PropTypes.string,
+      maxSelected: React.PropTypes.number,
       multiple: React.PropTypes.bool,
       onKeyChange: React.PropTypes.func,
       getItemsAsync: React.PropTypes.func
@@ -133,8 +135,9 @@ export default class Search extends Component {
   }
 
   setMenuItems(items) {
+    const { getItemsAsync } = this.props;
     this.setState({menuItems: items})
-    if(items.length){
+    if(items.length || getItemsAsync != undefined){
       this.showMenu()
     } else {
       this.hideMenu()
@@ -196,10 +199,22 @@ export default class Search extends Component {
     }
   }
 
+  renderLoader() {
+    return (
+      <div className="spinner"><i className="fa fa-spinner fa-spin" /></div>
+    )
+  }
+
   renderMenuItems() {
     const { menuItems, selectedItems } = this.state;
-    const { keys, searchKey } = this.props;
-    if(!menuItems.length) return null;
+    const { NotFoundPlaceholder } = this.props;
+    if(!menuItems.length) {
+      return (
+        <li className='autocomplete__item autocomplete__item--disabled'>
+          <span data-id={0}>{NotFoundPlaceholder}</span>
+        </li>
+      )
+    }
 
     let items = menuItems.map((item, i) => {
       if(this.itemSelected(item.id)){
@@ -235,19 +250,21 @@ export default class Search extends Component {
     }
 
     let items = selectedItems.map((item, i) => {
-      let icon = <span className='autocomplete__dropdown' />
       let itemClass = 'autocomplete__item autocomplete__item--selected autocomplete__item__dropdown'
-      if(multiple) {
-        icon = <span data-id={item.id} className='autocomplete__close'
+      let dropDown = <span className='autocomplete__dropdown' />
+      let icon = <span data-id={item.id} className='autocomplete__close'
                      onClick={this.handleRemove.bind(this)}></span>
+
+      if(multiple) {
+        dropDown = null
         itemClass = 'autocomplete__item autocomplete__item--selected'
       }
 
       return (
-        <li key={i} className={itemClass}
-            onClick={this.handleItemClick.bind(this)}>
+        <li key={i} className={itemClass} onClick={this.handleItemClick.bind(this)}>
           <span data-id={item.id} dangerouslySetInnerHTML={{__html: item.value }}></span>
           { icon }
+          { dropDown }
         </li>
       )
     })
@@ -255,9 +272,16 @@ export default class Search extends Component {
   }
 
   renderInput() {
+    const { maxSelected, multiple } = this.props;
+    const { selectedItems } = this.state;
+    let inputClass = 'autocomplete__input'
+    if(multiple && selectedItems.length >= maxSelected ){
+      inputClass = 'autocomplete__input autocomplete__input--hidden'
+    }
+
     return (
       <input type='text'
-             className='autocomplete__input'
+             className={inputClass}
              ref='searchInput'
              placeholder={this.props.placeholder}
              onClick={this.handleClick.bind(this)}
@@ -267,13 +291,13 @@ export default class Search extends Component {
   }
 
   getMenuClass() {
-    const { max_selected, multiple } = this.props;
+    const { maxSelected, multiple } = this.props;
     const { menuVisible, selectedItems } = this.state;
     let menuClass = 'autocomplete__menu autocomplete__menu--hidden'
     if(menuVisible && !multiple){
       menuClass = 'autocomplete__menu'
     }
-    if(menuVisible && selectedItems.length < max_selected ){
+    if(menuVisible && selectedItems.length < maxSelected ){
       menuClass = 'autocomplete__menu'
     }
     return menuClass
@@ -306,5 +330,4 @@ export default class Search extends Component {
       </div>
     )
   }
-
 }

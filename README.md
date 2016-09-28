@@ -40,7 +40,7 @@ class TestComponent extends Component {
 
         <Search items={items}
                 placeholder='Pick your language'
-                max_selected={3}
+                maxSelected={3}
                 multiple={true}
                 onItemsChanged={this.HiItems.bind(this)} />
       </div>
@@ -104,11 +104,14 @@ List of Items to filter through, an array of items with `value` and `id`, and an
 #### `multiple` (optional)
 Defaults to false, set as true if you want multiple items in the list, false for a single selection dropdown.
 
-#### `max_selected` (optional)
+#### `maxSelected` (optional)
 Defaults to 100, a maximum number of items allowed to be selected
 
 #### `placeholder` (optional)
 placeholder for the input
+
+#### `NotFoundPlaceholder` (optional)
+The placeholder shown when no results are found
 
 #### `onItemsChanged` (optional)
 Handler returns the items from the Search autocomplete component when items are added or removed from the list.
