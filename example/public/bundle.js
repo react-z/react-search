@@ -141,7 +141,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -160,6 +160,10 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
@@ -377,16 +381,17 @@
 	      var _this7 = this;
 
 	      this.showAllMenuItems();
-	      this.refs.searchInput.placeholder = '';
-	      this.refs.searchInput.value = '';
+	      _reactDom2.default.findDOMNode(this.refs.searchInput).placeholder = '';
+	      _reactDom2.default.findDOMNode(this.refs.searchInput).value = '';
 	      this.blurTimeout = setTimeout(function () {
-	        _this7.refs.searchInput.focus();
+	        _reactDom2.default.findDOMNode(_this7.refs.searchInput).focus();
 	      }, 100);
 	    }
 	  }, {
 	    key: 'resetPlaceholder',
 	    value: function resetPlaceholder() {
-	      this.refs.searchInput.placeholder = this.props.placeholder;
+	      var placeholder = _reactDom2.default.findDOMNode(this.refs.placeholder);
+	      placeholder = this.props.placeholder;
 	    }
 	  }, {
 	    key: 'handleRemove',
@@ -422,17 +427,13 @@
 	    value: function handleKeyChange(e) {
 	      var getItemsAsync = this.props.getItemsAsync;
 
-	      this.triggerKeyChange(this.refs.searchInput.value);
+	      var value = this.refs.searchInput.value;
+	      this.triggerKeyChange(value);
 	      if (getItemsAsync != undefined) {
-	        this.triggerGetItemsAsync(this.refs.searchInput.value);
+	        this.triggerGetItemsAsync(value);
 	      } else {
-	        this.updateSearchValue(this.refs.searchInput.value);
+	        this.updateSearchValue(value);
 	      }
-	    }
-	  }, {
-	    key: 'renderLoader',
-	    value: function renderLoader() {
-	      return _react2.default.createElement('div', { className: 'spinner' }, _react2.default.createElement('i', { className: 'fa fa-spinner fa-spin' }));
 	    }
 	  }, {
 	    key: 'renderMenuItems',
@@ -16512,7 +16513,8 @@
 	  if (x === y) {
 	    // Steps 1-5, 7-10
 	    // Steps 6.b-6.e: +0 != -0
-	    return x !== 0 || 1 / x === 1 / y;
+	    // Added the nonzero y check to make Flow happy, but it is redundant
+	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
 	  } else {
 	    // Step 6.a: NaN == NaN
 	    return x !== x && y !== y;

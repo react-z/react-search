@@ -10,7 +10,8 @@
   "author": "Steven Iseki <stevenisekimartin@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^15.3.1"
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
@@ -26,7 +27,7 @@
     "jsdom": "^9.2.1",
     "react": "^15.3.1",
     "react-addons-test-utils": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "react-dom": "^15.3.1",
     "tape": "^4.5.1",
     "webpack": "^1.13.1"
   },

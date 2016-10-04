@@ -2,6 +2,7 @@
  * Autocomplete Search component
 **/
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 
 export default class Search extends Component {
 
@@ -154,15 +155,16 @@ export default class Search extends Component {
 
   focusInput() {
     this.showAllMenuItems()
-    this.refs.searchInput.placeholder = ''
-    this.refs.searchInput.value = ''
+    ReactDOM.findDOMNode(this.refs.searchInput).placeholder = ''
+    ReactDOM.findDOMNode(this.refs.searchInput).value = ''
     this.blurTimeout = setTimeout(() => {
-      this.refs.searchInput.focus()
+      ReactDOM.findDOMNode(this.refs.searchInput).focus()
     }, 100);
   }
 
   resetPlaceholder() {
-    this.refs.searchInput.placeholder = this.props.placeholder
+    let placeholder = ReactDOM.findDOMNode(this.refs.placeholder)
+    placeholder = this.props.placeholder
   }
 
   handleRemove(e) {
@@ -191,18 +193,13 @@ export default class Search extends Component {
 
   handleKeyChange (e) {
     const { getItemsAsync } = this.props;
-    this.triggerKeyChange(this.refs.searchInput.value)
+    let value = this.refs.searchInput.value
+    this.triggerKeyChange(value)
     if( getItemsAsync != undefined ) {
-      this.triggerGetItemsAsync(this.refs.searchInput.value)
+      this.triggerGetItemsAsync(value)
     } else {
-      this.updateSearchValue(this.refs.searchInput.value)
+      this.updateSearchValue(value)
     }
-  }
-
-  renderLoader() {
-    return (
-      <div className="spinner"><i className="fa fa-spinner fa-spin" /></div>
-    )
   }
 
   renderMenuItems() {
