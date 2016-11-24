@@ -162,6 +162,13 @@ export default class Search extends Component {
     }, 100);
   }
 
+  blurInput() {
+    this.blurTimeout = setTimeout(() => {
+      ReactDOM.findDOMNode(this.refs.searchInput).blur()
+      this.hideMenu()
+    }, 100);
+  }
+
   resetPlaceholder() {
     let placeholder = ReactDOM.findDOMNode(this.refs.placeholder)
     placeholder = this.props.placeholder
@@ -175,6 +182,10 @@ export default class Search extends Component {
 
   handleFocus(e) {
     this.focusInput()
+  }
+
+  handleBlur(e) {
+    this.blurInput()
   }
 
   handleClick(e) {
@@ -283,6 +294,7 @@ export default class Search extends Component {
              placeholder={this.props.placeholder}
              onClick={this.handleClick.bind(this)}
              onFocus={this.handleFocus.bind(this)}
+             onBlur={this.handleBlur.bind(this)}
              onKeyUp={this.handleKeyChange.bind(this)} />
     )
   }
