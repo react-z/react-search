@@ -1,6 +1,6 @@
 {
   "name": "react-search",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "a simple Search Autocomplete component",
   "main": "lib/Search.js",
   "repository": {
