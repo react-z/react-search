@@ -8,7 +8,7 @@ react-search is a simple Autocomplete Search component
 
 ## Install
 
-`npm install react-search --save`
+`yarn add react-search`
 
 ## Usage basic
 
@@ -122,17 +122,22 @@ Handler returns the search value on key change.
 #### `getItemsAsync` (optional)
 A function to load items async before running the autocomplete filter.
 
-
 ## Styles
 
-react-search can be used with your own custom styles. A minimal [react-search.css](https://github.com/StevenIseki/react-search/blob/master/lib/react-search.css) style sheet is included.
+Uses styled-components 💅 for the base styling.
 
 ## Development
+    yarn
+    npm run dev
 
-    npm install
+## Build
+    yarn
     npm run build
-    npm test
-    npm start
+    npm login
+    npm version patch
+    git add -A
+    git push origin master
+    npm publish
 
 ## License
 

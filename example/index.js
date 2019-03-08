@@ -1,10 +1,9 @@
-import Search from '../lib/Search' /* 'react-search' */
+import Search from '../src/Search' /* 'react-search' */
 import ReactDOM from 'react-dom'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 class TestComponent extends Component {
-
-  HiItems(items) {
+  handleItemsChange(items) {
     console.log(items)
   }
 
@@ -45,12 +44,12 @@ class TestComponent extends Component {
                 placeholder='Pick your language'
                 maxSelected={3}
                 multiple={true}
-                onItemsChanged={this.HiItems.bind(this)} />
+                onItemsChanged={this.handleItemsChange.bind(this)} />
 
         <Search items={this.state.repos}
                 multiple={true}
                 getItemsAsync={this.getItemsAsync.bind(this)}
-                onItemsChanged={this.HiItems.bind(this)} />
+                onItemsChanged={this.handleItemsChange.bind(this)} />
       </div>
     )
   }

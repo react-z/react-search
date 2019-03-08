@@ -1,7 +1,7 @@
 {
   "name": "react-search",
   "version": "2.0.5",
-  "description": "a simple Search Autocomplete component",
+  "description": "A simple Search Autocomplete component",
   "main": "lib/Search.js",
   "repository": {
     "type": "git",
@@ -9,34 +9,37 @@
   },
   "author": "Steven Iseki <stevenisekimartin@gmail.com>",
   "license": "MIT",
+
   "peerDependencies": {
-    "react": "^0.14 || ^15.0",
-    "react-dom": "^0.14 || ^15.0"
+    "react": "^16.0.0"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.0",
+    "styled-components": "^4.1.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.8",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-0": "^6.16.0",
-    "babel-register": "^6.18.0",
-    "enzyme": "^2.6.0",
-    "expect": "^1.20.2",
-    "express": "^4.14.0",
-    "jsdom": "^9.8.3",
-    "react": "^15.4.1",
-    "react-addons-test-utils": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "tape": "^4.6.3",
-    "webpack": "^1.13.3"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "7.3.3",
+    "@babel/preset-env": "7.3.1",
+    "@babel/preset-react": "7.0.0",
+    "babel-loader": "8.0.5",
+    "babel-tape-runner": "^3.0.0",
+    "enzyme": "3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "expect": "24.1.0",
+    "html-webpack-plugin": "3.2.0",
+    "jsdom": "13.2.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "tape": "4.10.1",
+    "webpack": "4.29.4",
+    "webpack-cli": "3.2.3",
+    "webpack-dev-server": "3.1.14"
   },
   "scripts": {
     "build": "babel src --out-dir lib",
-    "example": "webpack --config ./example/webpack.config.js",
-    "serve": "node ./example/server.js",
-    "start": "npm run example && npm run serve",
-    "test": "tape test/index.js"
+    "dev": "webpack-dev-server --mode=development --port 3000 --inline --hot --config example/webpack.config",
+    "test": "babel-tape-runner test/*.js"
   },
   "keywords": [
     "javascript",
@@ -44,6 +47,8 @@
     "reactjs",
     "react-component",
     "autocomplete",
+    "react autocomplete",
+    "react-autocomplete",
     "search autocomplete",
     "auto complete",
     "search",

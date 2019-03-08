@@ -1,12 +1,20 @@
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+const DropDownIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24">
+    <path d="M7 10l5 5 5-5z" />
+    <path d="M0 0h24v24H0z" fill="none" />
+  </svg>
+)
+
 /**
  * Autocomplete Search component
-**/
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-
+ **/
 export default class Search extends Component {
-
-  static get defaultProps () {
+  static get defaultProps() {
     return {
       initialSelected: [],
       placeholder: '— None',
@@ -16,24 +24,24 @@ export default class Search extends Component {
     }
   }
 
-  static get propTypes () {
+  static get propTypes() {
     return {
-      items: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-      initialSelected: React.PropTypes.oneOfType([
-        React.PropTypes.object,
-        React.PropTypes.arrayOf(React.PropTypes.object)
+      items: PropTypes.arrayOf(PropTypes.object).isRequired,
+      initialSelected: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
       ]),
-      onItemsChanged: React.PropTypes.func,
-      placeholder: React.PropTypes.string,
-      NotFoundPlaceholder: React.PropTypes.string,
-      maxSelected: React.PropTypes.number,
-      multiple: React.PropTypes.bool,
-      onKeyChange: React.PropTypes.func,
-      getItemsAsync: React.PropTypes.func
+      onItemsChanged: PropTypes.func,
+      placeholder: PropTypes.string,
+      NotFoundPlaceholder: PropTypes.string,
+      maxSelected: PropTypes.number,
+      multiple: PropTypes.bool,
+      onKeyChange: PropTypes.func,
+      getItemsAsync: PropTypes.func
     }
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       menuItems: [],
@@ -44,8 +52,8 @@ export default class Search extends Component {
   }
 
   componentDidMount() {
-    const { initialSelected } = this.props;
-    if(initialSelected instanceof Array) {
+    const { initialSelected } = this.props
+    if (initialSelected instanceof Array) {
       this.setSelected(initialSelected)
     } else {
       this.addSelected(initialSelected)
@@ -53,27 +61,32 @@ export default class Search extends Component {
   }
 
   SearchItemInArrayObjects(items, input, searchKey) {
-    var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ''), 'i')
-    return items.filter((item) => {
+    var reg = new RegExp(
+      input
+        .split('')
+        .join('\\w*')
+        .replace(/\W/, ''),
+      'i'
+    )
+    return items.filter(item => {
       if (reg.test(item[searchKey])) {
         return item
       }
     })
   }
 
-  selectMenuItem (item) {
-    const { multiple } = this.props;
-    multiple ? this.addSelected(item) : this.setSelected( [item] )
+  selectMenuItem(item) {
+    const { multiple } = this.props
+    multiple ? this.addSelected(item) : this.setSelected([item])
     this.hideMenu()
   }
 
   showMenu() {
-    this.setState({menuVisible: true })
+    this.setState({ menuVisible: true })
   }
 
   hideMenu() {
-    this.setState({menuVisible: false })
-    this.resetPlaceholder()
+    this.setState({ menuVisible: false })
   }
 
   triggerItemsChanged() {
@@ -97,7 +110,7 @@ export default class Search extends Component {
   }
 
   setSelected(selected) {
-    this.setState({selectedItems: selected }, () => {
+    this.setState({ selectedItems: selected }, () => {
       this.triggerItemsChanged()
     })
   }
@@ -105,40 +118,44 @@ export default class Search extends Component {
   addSelected(selected) {
     let items = this.state.selectedItems
     items.push(selected)
-    this.setState({selectedItems: items }, () => {
+    this.setState({ selectedItems: items }, () => {
       this.triggerItemsChanged()
     })
   }
 
   removeSelected(itemId) {
     let items = this.state.selectedItems
-    let itemsUpdated = items.filter( (i) => {
-	     return i.id != itemId
+    let itemsUpdated = items.filter(i => {
+      return i.id != itemId
     })
-    this.setState({selectedItems: itemsUpdated }, () => {
+    this.setState({ selectedItems: itemsUpdated }, () => {
       this.triggerItemsChanged()
     })
   }
 
   updateSearchValue(value) {
-    const { items } = this.props;
+    const { items } = this.props
     this.setState({ searchValue: value }, () => {
-      let menuItems = this.SearchItemInArrayObjects(items, this.state.searchValue, 'value')
+      let menuItems = this.SearchItemInArrayObjects(
+        items,
+        this.state.searchValue,
+        'value'
+      )
       this.setMenuItems(menuItems)
     })
   }
 
   showAllMenuItems() {
-    const { items } = this.props;
-    this.setState({searchValue: ''})
+    const { items } = this.props
+    this.setState({ searchValue: '' })
     let menuItems = this.SearchItemInArrayObjects(items, '', 'value')
     this.setMenuItems(menuItems)
   }
 
   setMenuItems(items) {
-    const { getItemsAsync } = this.props;
-    this.setState({menuItems: items})
-    if(items.length || getItemsAsync != undefined){
+    const { getItemsAsync } = this.props
+    this.setState({ menuItems: items })
+    if (items.length || getItemsAsync != undefined) {
       this.showMenu()
     } else {
       this.hideMenu()
@@ -146,11 +163,11 @@ export default class Search extends Component {
   }
 
   itemSelected(itemId) {
-    const { selectedItems } = this.state;
-    let item = selectedItems.find( (s) => {
-        return s.id === itemId;
-    });
-    return (item != undefined) ? true : false
+    const { selectedItems } = this.state
+    let item = selectedItems.find(s => {
+      return s.id === itemId
+    })
+    return item != undefined ? true : false
   }
 
   focusInput() {
@@ -159,25 +176,20 @@ export default class Search extends Component {
     ReactDOM.findDOMNode(this.refs.searchInput).value = ''
     this.blurTimeout = setTimeout(() => {
       ReactDOM.findDOMNode(this.refs.searchInput).focus()
-    }, 100);
+    }, 100)
   }
 
   blurInput() {
     this.blurTimeout = setTimeout(() => {
       ReactDOM.findDOMNode(this.refs.searchInput).blur()
       this.hideMenu()
-    }, 100);
+    }, 100)
   }
 
-  resetPlaceholder() {
-    let placeholder = ReactDOM.findDOMNode(this.refs.placeholder)
-    placeholder = this.props.placeholder
-  }
-
-  handleRemove(e) {
+  handleRemove(e, id) {
     e.preventDefault()
     e.stopPropagation()
-    this.removeSelected(e.target.dataset.id)
+    this.removeSelected(id)
   }
 
   handleFocus(e) {
@@ -198,15 +210,18 @@ export default class Search extends Component {
 
   handleSelect(e) {
     let element = e.currentTarget.children[0]
-    let item = { id: parseInt(element.dataset.id), value: element.innerHTML.replace(/&amp;/g, '&') }
+    let item = {
+      id: parseInt(element.dataset.id),
+      value: element.innerHTML.replace(/&amp;/g, '&')
+    }
     this.selectMenuItem(item)
   }
 
-  handleKeyChange (e) {
-    const { getItemsAsync } = this.props;
+  handleKeyChange(e) {
+    const { getItemsAsync } = this.props
     let value = this.refs.searchInput.value
     this.triggerKeyChange(value)
-    if( getItemsAsync != undefined ) {
+    if (getItemsAsync != undefined) {
       this.triggerGetItemsAsync(value)
     } else {
       this.updateSearchValue(value)
@@ -214,28 +229,36 @@ export default class Search extends Component {
   }
 
   renderMenuItems() {
-    const { menuItems, selectedItems } = this.state;
-    const { NotFoundPlaceholder } = this.props;
-    if(!menuItems.length) {
+    const { menuItems, selectedItems } = this.state
+    const { NotFoundPlaceholder } = this.props
+    if (!menuItems.length) {
       return (
-        <li className='autocomplete__item autocomplete__item--disabled'>
+        <ListItem style={{ color: '#ff6961' }}>
           <span data-id={0}>{NotFoundPlaceholder}</span>
-        </li>
+        </ListItem>
       )
     }
 
     let items = menuItems.map((item, i) => {
-      if(this.itemSelected(item.id)){
+      if (this.itemSelected(item.id)) {
         return (
-          <li key={i} className='autocomplete__item autocomplete__item--disabled'>
-            <span key={i} data-id={item.id} dangerouslySetInnerHTML={{__html: item.value }}></span>
-          </li>
+          <ListItem key={i} style={{ color: '#ebebeb' }}>
+            <span
+              key={i}
+              data-id={item.id}
+              dangerouslySetInnerHTML={{ __html: item.value }}
+            />
+          </ListItem>
         )
       } else {
         return (
-          <li key={i} className='autocomplete__item' onClick={this.handleSelect.bind(this)}>
-            <span key={i} data-id={item.id} dangerouslySetInnerHTML={{__html: item.value }}></span>
-          </li>
+          <ListItem key={i} onClick={this.handleSelect.bind(this)}>
+            <span
+              key={i}
+              data-id={item.id}
+              dangerouslySetInnerHTML={{ __html: item.value }}
+            />
+          </ListItem>
         )
       }
     })
@@ -243,100 +266,155 @@ export default class Search extends Component {
   }
 
   renderSelectedItems() {
-    const { selectedItems } = this.state;
-    const { multiple, placeholder } = this.props;
-    if(!selectedItems.length && multiple ) return;
+    const { selectedItems } = this.state
+    const { multiple, placeholder } = this.props
+    if (!selectedItems.length && multiple) return
 
-    if(!selectedItems.length && !multiple ) {
+    if (!selectedItems.length && !multiple) {
       return (
-        <li className='autocomplete__item autocomplete__item--selected autocomplete__item__dropdown'
-            onClick={this.handleItemClick.bind(this)}>
-          <span dangerouslySetInnerHTML={{__html: placeholder }}></span>
-          <span className='autocomplete__dropdown' />
-        </li>
+        <ListItem onClick={this.handleItemClick.bind(this)}>
+          <span dangerouslySetInnerHTML={{ __html: placeholder }} />
+          <DropDownIcon />
+        </ListItem>
       )
     }
 
     let items = selectedItems.map((item, i) => {
-      let itemClass = 'autocomplete__item autocomplete__item--selected autocomplete__item__dropdown'
-      let dropDown = <span className='autocomplete__dropdown' />
-      let icon = <span data-id={item.id} className='autocomplete__close'
-                     onClick={this.handleRemove.bind(this)}></span>
-
-      if(multiple) {
-        dropDown = null
-        itemClass = 'autocomplete__item autocomplete__item--selected'
-      }
-
       return (
-        <li key={i} className={itemClass} onClick={this.handleItemClick.bind(this)}>
-          <span data-id={item.id} dangerouslySetInnerHTML={{__html: item.value }}></span>
-          { icon }
-          { dropDown }
-        </li>
+        <ListItem key={i} onClick={this.handleItemClick.bind(this)}>
+          <span
+            data-id={item.id}
+            dangerouslySetInnerHTML={{ __html: item.value }}
+          />
+          <svg
+            onClick={e => this.handleRemove(e, item.id)}
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+          >
+            <g fill="currentColor" fillRule="evenodd">
+              <path d="M16.95 5.636l1.414 1.414L7.05 18.364 5.636 16.95z" />
+              <path d="M16.95 18.364l1.414-1.414L7.05 5.636 5.636 7.05z" />
+            </g>
+          </svg>
+          {!multiple && <DropDownIcon />}
+        </ListItem>
       )
     })
     return items
   }
 
   renderInput() {
-    const { maxSelected, multiple } = this.props;
-    const { selectedItems } = this.state;
-    let inputClass = 'autocomplete__input'
-    if(multiple && selectedItems.length >= maxSelected ){
-      inputClass = 'autocomplete__input autocomplete__input--hidden'
+    const { maxSelected, multiple } = this.props
+    const { selectedItems } = this.state
+    let visible = true
+    if (multiple && selectedItems.length >= maxSelected) {
+      visible = false
     }
 
     return (
-      <input type='text'
-             className={inputClass}
-             ref='searchInput'
-             placeholder={this.props.placeholder}
-             onClick={this.handleClick.bind(this)}
-             onFocus={this.handleFocus.bind(this)}
-             onBlur={this.handleBlur.bind(this)}
-             onKeyUp={this.handleKeyChange.bind(this)} />
+      <Input
+        type="text"
+        visible={visible}
+        ref="searchInput"
+        placeholder={this.props.placeholder}
+        onClick={this.handleClick.bind(this)}
+        onFocus={this.handleFocus.bind(this)}
+        onBlur={this.handleBlur.bind(this)}
+        onKeyUp={this.handleKeyChange.bind(this)}
+      />
     )
   }
 
-  getMenuClass() {
-    const { maxSelected, multiple } = this.props;
-    const { menuVisible, selectedItems } = this.state;
-    let menuClass = 'autocomplete__menu autocomplete__menu--hidden'
-    if(menuVisible && !multiple){
-      menuClass = 'autocomplete__menu'
-    }
-    if(menuVisible && selectedItems.length < maxSelected ){
-      menuClass = 'autocomplete__menu'
-    }
-    return menuClass
-  }
+  render() {
+    const { maxSelected, multiple } = this.props
+    const { menuVisible, selectedItems } = this.state
 
-  render () {
-    const { multiple } = this.props;
-    let menuClass = this.getMenuClass()
+    let showMenu = false
+    if (menuVisible && !multiple) {
+      showMenu = true
+    }
+    if (menuVisible && selectedItems.length < maxSelected) {
+      showMenu = true
+    }
 
     return (
-      <div className='autocomplete'>
+      <Autocomplete>
+        <List>{this.renderSelectedItems()}</List>
 
-        <div className='autocomplete__selected'>
-          <ul className='autocomplete__items'>
-            {this.renderSelectedItems()}
-          </ul>
-        </div>
-
-        { multiple && this.renderInput() }
-
-        <div className='autocomplete__menu--wrap'>
-          <div className={menuClass} ref='autocomplete'>
-            { !multiple && this.renderInput() }
-            <ul className='autocomplete__items'>
-              {this.renderMenuItems()}
-            </ul>
-          </div>
-        </div>
-
-      </div>
+        {multiple && this.renderInput()}
+        <MenuWrapper>
+          <Menu visible={showMenu} ref="autocomplete">
+            {!multiple && this.renderInput()}
+            <List>{this.renderMenuItems()}</List>
+          </Menu>
+        </MenuWrapper>
+      </Autocomplete>
     )
   }
 }
+
+const Autocomplete = styled.div`
+  margin: 0;
+  position: relative;
+`
+
+const Input = styled.input`
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 1.3rem;
+  line-height: normal;
+  margin: 1px 0;
+  outline: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  display: ${props => (props.visible ? 'block' : 'none')};
+`
+
+const List = styled.ul`
+  margin: 0;
+  padding: 0.2rem;
+`
+const ListItem = styled.li`
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  margin-bottom: 0.2rem;
+  padding: 0.3rem;
+
+  background-color: ${props => (props.selected ? '#ebebeb' : '#fff')};
+
+  &:hover {
+    background-color: #ebebeb;
+  }
+
+  span {
+    flex: 1;
+    font-size: 1.3rem;
+    word-wrap: break-word;
+  }
+`
+
+const MenuWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`
+const Menu = styled.div`
+  background: white;
+  box-shadow: 0.1rem 0.1rem 2rem rgba(0, 0, 0, 0.25);
+  display: block;
+  line-height: 1.5em;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0.2em;
+  position: absolute;
+  text-decoration: none;
+  width: 100%;
+  z-index: 100;
+  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+`
