@@ -1,4 +1,4 @@
-import Search from '../src/Search' /* 'react-search' */
+import Search from '../lib/Search' /* 'react-search' */
 import ReactDOM from 'react-dom'
 import React, { Component } from 'react'
 
