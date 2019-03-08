@@ -1,6 +1,6 @@
 {
   "name": "react-search",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "A simple Search Autocomplete component",
   "main": "lib/Search.js",
   "repository": {
@@ -9,7 +9,6 @@
   },
   "author": "Steven Iseki <stevenisekimartin@gmail.com>",
   "license": "MIT",
-
   "peerDependencies": {
     "react": "^16.0.0"
   },
