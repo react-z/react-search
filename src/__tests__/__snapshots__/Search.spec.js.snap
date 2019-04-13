@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search renders correctly and matches snapshot 1`] = `
+<div
+  className="sc-bdVaJa bPcRQP"
+>
+  <ul
+    className="sc-htpNat cqaNcS"
+  />
+  <input
+    className="sc-bwzfXH LBGII"
+    id="search-input"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyUp={[Function]}
+    placeholder="Pick your language"
+    type="text"
+  />
+  <div
+    className="sc-ifAKCX jHDXzb"
+  >
+    <div
+      className="sc-EHOje cMdXnC"
+    >
+      <ul
+        className="sc-htpNat cqaNcS"
+      >
+        <li
+          className="sc-bxivhb iRISHI"
+          style={
+            Object {
+              "color": "#ff6961",
+            }
+          }
+        >
+          <span
+            data-id={0}
+          >
+            Please search for some items...
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

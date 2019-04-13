@@ -314,6 +314,7 @@ export default class Search extends Component {
 
     return (
       <Input
+        id='search-input'
         type="text"
         visible={visible}
         ref="searchInput"
